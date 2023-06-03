@@ -2,7 +2,7 @@ export const products = [
   {
     _id: '1',
     name: 'Airpods Wireless Bluetooth Headphones',
-    image: './images/airpods.jpg',
+    image: '/images/airpods.jpg',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas incidunt sint explicabo a et asperiores, voluptatibus, dolor suscipit similique nemo placeat aliquid quam. Molestias debitis, ipsa aperiam harum animi suscipit?',
     brand: 'Apple',
@@ -15,7 +15,7 @@ export const products = [
   {
     _id: '2',
     name: 'iPhone 11 Pro 256GB Memory',
-    image: './images/phone.jpg',
+    image: '/images/phone.jpg',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas incidunt sint explicabo a et asperiores, voluptatibus, dolor suscipit similique nemo placeat aliquid quam. Molestias debitis, ipsa aperiam harum animi suscipit?',
     brand: 'Apple',
@@ -28,7 +28,7 @@ export const products = [
   {
     _id: '3',
     name: 'Cannon EOS 80D DSLR Camera',
-    image: './images/camera.webp',
+    image: '/images/camera.webp',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas incidunt sint explicabo a et asperiores, voluptatibus, dolor suscipit similique nemo placeat aliquid quam. Molestias debitis, ipsa aperiam harum animi suscipit?',
     brand: 'Cannon',
@@ -41,7 +41,7 @@ export const products = [
   {
     _id: '4',
     name: 'Sony Playstation 4 Pro White Version',
-    image: './images/playstation.jpg',
+    image: '/images/playstation.jpg',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas incidunt sint explicabo a et asperiores, voluptatibus, dolor suscipit similique nemo placeat aliquid quam. Molestias debitis, ipsa aperiam harum animi suscipit?',
     brand: 'Sony',
@@ -54,7 +54,7 @@ export const products = [
   {
     _id: '5',
     name: 'Logitech G-Series Gaming Mouse',
-    image: './images/mouse.webp',
+    image: '/images/mouse.webp',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas incidunt sint explicabo a et asperiores, voluptatibus, dolor suscipit similique nemo placeat aliquid quam. Molestias debitis, ipsa aperiam harum animi suscipit?',
     brand: 'Logitech',
@@ -67,7 +67,7 @@ export const products = [
   {
     _id: '6',
     name: 'Amazon Echo Dot 3rd Generation',
-    image: './images/alexa.jpg',
+    image: '/images/alexa.jpg',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas incidunt sint explicabo a et asperiores, voluptatibus, dolor suscipit similique nemo placeat aliquid quam. Molestias debitis, ipsa aperiam harum animi suscipit?',
     brand: 'Amazon',
