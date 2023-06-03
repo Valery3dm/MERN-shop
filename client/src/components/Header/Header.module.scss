@@ -1,0 +1,47 @@
+.appBar {
+  background: #000 !important;
+
+  .contentWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .logoDesktopNav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .logoDesktopNav {
+        display: none;
+      }
+    }
+
+    .logoMobileNav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    @media (min-width: 600px) {
+      .logoMobileNav {
+        display: none;
+      }
+    }
+
+    .logoIcon {
+      margin-right: 8px;
+      color: #fff;
+    }
+
+    .logoText {
+      margin-right: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+}

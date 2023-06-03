@@ -13,6 +13,9 @@ import {
 import StoreIcon from '@mui/icons-material/Store';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link } from 'react-router-dom';
+
+import styles from './Header.module.scss';
 
 const Header: FC = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -30,67 +33,38 @@ const Header: FC = () => {
   };
 
   const desktopBar = (): JSX.Element => (
-    <>
-      <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-      <Typography
-        variant="h6"
-        noWrap
-        component="a"
-        href="/"
-        sx={{
-          mr: 2,
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          letterSpacing: '.3rem',
-          color: 'inherit',
-          textDecoration: 'none',
-        }}
-      >
+    <Link to="/" className={styles.logoDesktopNav}>
+      <StoreIcon className={styles.logoIcon} />
+      <Typography noWrap className={styles.logoText}>
         MERN-Shop
       </Typography>
-    </>
+    </Link>
   );
 
   const mobileBar = (): JSX.Element => (
-    <>
-      <StoreIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-      <Typography
-        variant="h5"
-        noWrap
-        component="a"
-        href=""
-        sx={{
-          mr: 2,
-          display: { xs: 'flex', md: 'none' },
-          flexGrow: 1,
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          letterSpacing: '.3rem',
-          color: 'inherit',
-          textDecoration: 'none',
-        }}
-      >
+    <Link to="/" className={styles.logoMobileNav}>
+      <StoreIcon className={styles.logoIcon} />
+      <Typography noWrap className={styles.logoText}>
         MERN - S
       </Typography>
-    </>
+    </Link>
   );
 
   const unAuthorizedUser = (): JSX.Element => (
     <Box
+      className={styles.unAuthorized}
       sx={{
-        marginLeft: 'auto',
         display: { xs: 'flex' },
         flexDirection: 'row',
       }}
     >
-      <ShoppingCartIcon sx={{ mr: 1 }} />
+      <ShoppingCartIcon sx={{ mr: 0.5 }} />
       <Typography textAlign="center" color="white">
-        cart
+        Cart
       </Typography>
-      <PersonIcon sx={{ mr: 1 }} />
+      <PersonIcon sx={{ mr: 0.5, ml: 2 }} />
       <Typography textAlign="center" color="white">
-        sign In
+        Sign In
       </Typography>
     </Box>
   );
@@ -98,12 +72,12 @@ const Header: FC = () => {
   const authorizedUser = (): JSX.Element => (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        <IconButton onClick={handleOpenUserMenu}>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: '45px' }}
+        sx={{ mt: '44px' }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
@@ -122,10 +96,11 @@ const Header: FC = () => {
           textAlign="center"
           color="black"
           onClick={handleCloseUserMenu}
+          sx={{ px: 2 }}
         >
           Cart
         </Typography>
-        <Typography textAlign="center" onClick={handleLogout}>
+        <Typography textAlign="center" onClick={handleLogout} sx={{ px: 2 }}>
           Logout
         </Typography>
       </Menu>
@@ -133,35 +108,17 @@ const Header: FC = () => {
   );
 
   return (
-    <header>
-      <AppBar position="static" sx={{ background: 'black' }}>
-        <Container maxWidth="xl">
-          <Toolbar
-            disableGutters
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              {desktopBar()}
-              {mobileBar()}
-            </Box>
-            <Box>
-              {false ? unAuthorizedUser() : authorizedUser()}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </header>
+    <AppBar position="static" className={styles.appBar}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters className={styles.contentWrapper}>
+          <Box>
+            {desktopBar()}
+            {mobileBar()}
+          </Box>
+          <Box>{false ? unAuthorizedUser() : authorizedUser()}</Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

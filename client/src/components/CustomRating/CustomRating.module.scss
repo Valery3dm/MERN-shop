@@ -1,0 +1,9 @@
+.ratingWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .reviewText {
+    padding-left: 4px;
+  }
+}
