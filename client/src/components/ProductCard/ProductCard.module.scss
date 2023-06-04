@@ -1,0 +1,18 @@
+.card {
+  .imageWrapper {
+    height: 200px;
+    padding: 1rem;
+  
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .name {
+    height: 60px;
+    overflow: hidden;
+  }
+  
+}
