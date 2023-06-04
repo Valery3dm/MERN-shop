@@ -1,7 +1,7 @@
-import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import {
-  Button,
   Card,
   CardContent,
   Divider,
@@ -13,15 +13,23 @@ import {
 } from '@mui/material';
 
 import CustomRating from '../../components/CustomRating/CustomRating';
-import { products } from '../../products';
+import CustomButton from '../../common/CustomButton/CustomButton';
+
+import { Product } from '../../interfaces';
 
 import styles from './ProductPage.module.scss';
-import CustomButton from '../../common/CustomButton/CustomButton';
 
 const ProductPage = () => {
   const { id: productId } = useParams();
-  const navigate = useNavigate();
-  const product = products.find((p) => p._id === productId);
+  const [product, setProduct] = useState<Product>();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${productId}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [productId]);
 
   if (!product) {
     return <Typography variant="h1">Loading...</Typography>;
@@ -55,7 +63,9 @@ const ProductPage = () => {
             </ListItem>
             <ListItemText
               primary={
-                <Typography variant="body1"><b>Price:</b> ${product.price}</Typography>
+                <Typography variant="body1">
+                  <b>Price:</b> ${product.price}
+                </Typography>
               }
             />
             <Divider />
@@ -76,20 +86,38 @@ const ProductPage = () => {
                 <ListItem divider>
                   <Grid container spacing={3}>
                     <Grid item xs={6}>
-                      <Typography variant="body1" className={styles.boldTextCard}>Price:</Typography>
+                      <Typography
+                        variant="body1"
+                        className={styles.boldTextCard}
+                      >
+                        Price:
+                      </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography variant="body1" className={styles.boldTextCard}>${product.price}</Typography>
+                      <Typography
+                        variant="body1"
+                        className={styles.boldTextCard}
+                      >
+                        ${product.price}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </ListItem>
                 <ListItem alignItems="flex-start" divider>
                   <Grid container spacing={3}>
                     <Grid item xs={6}>
-                      <Typography variant="body1" className={styles.boldTextCard}>Status:</Typography>
+                      <Typography
+                        variant="body1"
+                        className={styles.boldTextCard}
+                      >
+                        Status:
+                      </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography variant="body1"  className={styles.boldTextCard}>
+                      <Typography
+                        variant="body1"
+                        className={styles.boldTextCard}
+                      >
                         {product.countInStock > 0 ? 'In Stock' : 'Out of stock'}
                       </Typography>
                     </Grid>
