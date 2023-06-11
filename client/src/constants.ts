@@ -1,5 +1,7 @@
-export const BASE_URL = '';
-export const PRODUCTS_URL = '/api/products';
-export const USERS_URL = '/api/users';
-export const ORDERS_URL = '/api/orders';
-export const PAYPAL_URL = '/api/paypal';
+export enum URLs {
+  BASE_URL = '',
+  PRODUCTS_URL = '/api/products',
+  USERS_URL = '/api/users',
+  ORDERS_URL = '/api/orders',
+  PAYPAL_URL = '/api/paypal',
+}

@@ -1,4 +1,5 @@
-import { Typography } from '@mui/material';
+import Message from '../Message/Message';
+
 import { CustomErrorProps } from './CustomError.types';
 
 const CustomError = ({ error }: CustomErrorProps) => {
@@ -6,14 +7,11 @@ const CustomError = ({ error }: CustomErrorProps) => {
     const errMsg = 'error' in error ? error.error : JSON.stringify(error.data);
 
     return (
-      <div>
-        <Typography variant="h4">An error has occurred:</Typography>
-        <Typography variant="h5">{errMsg}</Typography>
-      </div>
+      <Message severity='error'>{errMsg}</Message>
     );
   }
 
-  return <Typography variant="h4">{error.message}</Typography>;
+  return <Message severity='error'>{JSON.stringify(error.message)}</Message>;
 };
 
 export default CustomError;

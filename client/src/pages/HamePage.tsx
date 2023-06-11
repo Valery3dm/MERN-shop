@@ -1,22 +1,19 @@
 import { Grid, Typography } from '@mui/material';
 
-import { productsApi } from '../store/services/productsApi';
+import { useGetProductsQuery } from '../store/services/productsApi';
 import CustomError from '../common/CustomError';
 import ProductCard from '../components/ProductCard';
+import Loader from '../common/Loader/Loader';
 
 const HamePage = () => {
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = productsApi.useGetProductsQuery();
+  const { data: products, isLoading, error } = useGetProductsQuery();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />
   }
 
   if (error) {
-    return <CustomError error={error} />
+    return <CustomError error={error} />;
   }
 
   return (
