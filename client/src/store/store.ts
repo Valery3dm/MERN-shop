@@ -4,9 +4,11 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 import { api } from './services/api';
+import cartSliceReducer from './slices/cartSlice';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
+  cart: cartSliceReducer,
 });
 
 export const setupStore = () => {
@@ -20,4 +22,4 @@ export const setupStore = () => {
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispath = AppStore['dispatch'];
+export type AppDispatch = AppStore['dispatch'];

@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Card,
   Grid,
@@ -8,6 +9,10 @@ import {
   Typography,
   CardContent,
   ListItemText,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 import { useGetProductDetailsQuery } from '../../store/services/productsApi';
@@ -15,17 +20,27 @@ import CustomRating from '../../components/CustomRating/CustomRating';
 import CustomButton from '../../common/CustomButton/CustomButton';
 import CustomError from '../../common/CustomError/CustomError';
 import Loader from '../../common/Loader/Loader';
+import { useAppDispatch } from '../../hooks/redux';
+import { addToCart } from '../../store/slices/cartSlice';
 
 import styles from './ProductPage.module.scss';
 
 const ProductPage = () => {
+  const dispatch = useAppDispatch();
   const { id: productId } = useParams();
-
+  const navigate = useNavigate();
   const {
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
+
+  const [qty, setQty] = useState<number>(1);
+
+  const addToCartItems = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate('/cart');
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -86,7 +101,7 @@ const ProductPage = () => {
                 <CardContent className={styles.content}>
                   <List>
                     <ListItem divider>
-                      <Grid container spacing={3}>
+                      <Grid container className={styles.itemList} spacing={3}>
                         <Grid item xs={6}>
                           <Typography
                             variant="body1"
@@ -106,7 +121,7 @@ const ProductPage = () => {
                       </Grid>
                     </ListItem>
                     <ListItem alignItems="flex-start" divider>
-                      <Grid container spacing={3}>
+                      <Grid container className={styles.itemList} spacing={3}>
                         <Grid item xs={6}>
                           <Typography
                             variant="body1"
@@ -127,10 +142,46 @@ const ProductPage = () => {
                         </Grid>
                       </Grid>
                     </ListItem>
+                    {product.countInStock > 0 && (
+                      <ListItem alignItems="center" divider>
+                        <Grid container className={styles.itemList} spacing={3}>
+                          <Grid item xs={6}>
+                            <Typography
+                              variant="body1"
+                              className={styles.boldTextCard}
+                            >
+                              Qty:
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <InputLabel id="qty-select-label">QTY</InputLabel>
+                              <Select
+                                labelId="qty-select-label"
+                                id="qty-select"
+                                value={qty}
+                                label="QTY"
+                                onChange={(e) => setQty(Number(e.target.value))}
+                              >
+                                {Array.from(
+                                  { length: product.countInStock },
+                                  (_, index) => index,
+                                ).map((num) => (
+                                  <MenuItem key={num + 1} value={num + 1}>
+                                    {num + 1}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
+                    )}
                     <ListItem>
                       <CustomButton
                         text="Add to cart"
                         disabled={product.countInStock === 0}
+                        onClick={addToCartItems}
                       />
                     </ListItem>
                   </List>
