@@ -5,13 +5,13 @@ import styles from './CustomButton.module.scss';
 
 type CustomButtonProps = {
   text: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 };
 
 const CustomButton = ({
   text,
-  disabled,
+  disabled = false,
   onClick,
 }: CustomButtonProps) => (
   <Button

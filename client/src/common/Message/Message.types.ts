@@ -1,4 +1,4 @@
 export type MessageProps = {
   severity: 'error' | 'warning' | 'info' | 'success';
-  children: string;
+  children: string | JSX.Element;
 };

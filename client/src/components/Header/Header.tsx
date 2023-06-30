@@ -9,20 +9,21 @@ import {
   Menu,
   Tooltip,
   Avatar,
-  Badge
+  Badge,
 } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks/redux';
 import StoreIcon from '@mui/icons-material/Store';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link } from 'react-router-dom';
 
 import styles from './Header.module.scss';
 
 const Header: FC = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const {cartItems} = useAppSelector(state => state.cart);
+  const { cartItems } = useAppSelector((state) => state.cart);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -30,6 +31,7 @@ const Header: FC = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    navigate('/cart');
   };
 
   const handleLogout = () => {
@@ -62,9 +64,18 @@ const Header: FC = () => {
         flexDirection: 'row',
       }}
     >
-      <Badge color="secondary" badgeContent={cartItems.length} max={99} showZero>
+      <Badge
+        color="secondary"
+        badgeContent={cartItems.length}
+        max={99}
+        showZero
+      >
         <ShoppingCartIcon sx={{ mr: 0.5 }} />
-        <Typography textAlign="center" color="white">
+        <Typography
+          textAlign="center"
+          color="white"
+          onClick={() => navigate('/cart')}
+        >
           Cart
         </Typography>
       </Badge>
