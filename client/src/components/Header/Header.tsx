@@ -66,23 +66,23 @@ const Header: FC = () => {
     >
       <Badge
         color="secondary"
+        className={styles.menuOptionBtn}
         badgeContent={cartItems.length}
+        onClick={() => navigate('/cart')}
         max={99}
         showZero
       >
         <ShoppingCartIcon sx={{ mr: 0.5 }} />
-        <Typography
-          textAlign="center"
-          color="white"
-          onClick={() => navigate('/cart')}
-        >
+        <Typography textAlign="center" color="white">
           Cart
         </Typography>
       </Badge>
-      <PersonIcon sx={{ mr: 0.5, ml: 2 }} />
-      <Typography textAlign="center" color="white">
-        Sign In
-      </Typography>
+      <Box className={styles.menuOptionBtn} onClick={() => navigate('/login')}>
+        <PersonIcon sx={{ mr: 0.5, ml: 2 }} />
+        <Typography textAlign="center" color="white">
+          Sign In
+        </Typography>
+      </Box>
     </Box>
   );
 
