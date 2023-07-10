@@ -23,6 +23,7 @@ import styles from './Header.module.scss';
 const Header: FC = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { userInfo } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -109,15 +110,34 @@ const Header: FC = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
+        <Badge
+          color="secondary"
+          className={styles.menuOptionBtn}
+          badgeContent={cartItems.length}
+          onClick={() => navigate('/cart')}
+          max={99}
+          showZero
+        >
+          <Typography
+            textAlign="center"
+            color="black"
+            onClick={handleCloseUserMenu}
+            sx={{
+              px: 2,
+              '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+            }}
+          >
+            Cart
+          </Typography>
+        </Badge>
         <Typography
           textAlign="center"
-          color="black"
-          onClick={handleCloseUserMenu}
-          sx={{ px: 2 }}
+          onClick={handleLogout}
+          sx={{
+            px: 2,
+            '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+          }}
         >
-          Cart
-        </Typography>
-        <Typography textAlign="center" onClick={handleLogout} sx={{ px: 2 }}>
           Logout
         </Typography>
       </Menu>
@@ -132,7 +152,7 @@ const Header: FC = () => {
             {desktopBar()}
             {mobileBar()}
           </Box>
-          <Box>{true ? unAuthorizedUser() : authorizedUser()}</Box>
+          <Box>{userInfo ? authorizedUser() : unAuthorizedUser()}</Box>
         </Toolbar>
       </Container>
     </AppBar>
