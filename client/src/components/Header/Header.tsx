@@ -12,18 +12,24 @@ import {
   Badge,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-
-import { useAppSelector } from '../../hooks/redux';
 import StoreIcon from '@mui/icons-material/Store';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import { useLogoutMutation } from '../../store/services/usersApi';
+import { logout } from '../../store/slices/authSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+
 import styles from './Header.module.scss';
 
 const Header: FC = () => {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((state) => state.cart);
   const { userInfo } = useAppSelector((state) => state.auth);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const [logoutApiCall] = useLogoutMutation();
+
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,8 +41,16 @@ const Header: FC = () => {
     navigate('/cart');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     handleCloseUserMenu();
+
+    try {
+      await logoutApiCall('User').unwrap();
+      dispatch(logout());
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const desktopBar = (): JSX.Element => (

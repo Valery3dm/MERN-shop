@@ -1,5 +1,5 @@
-import { URLs } from '../../constants';
 import { api } from './api';
+import { URLs } from '../../constants';
 
 export const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,20 @@ export const usersApi = api.injectEndpoints({
         body: data
       }),
     }),
+    register: build.mutation({
+      query: (data) => ({
+        url: `${URLs.USERS_URL}`,
+        method: 'POST',
+        body: data
+      }),
+    }),
+    logout: build.mutation({
+      query: () => ({
+        url: `${URLs.USERS_URL}/logout`,
+        method: 'POST'
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = usersApi;
+export const { useLoginMutation, useRegisterMutation ,useLogoutMutation } = usersApi;

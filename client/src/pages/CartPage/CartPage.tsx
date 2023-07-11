@@ -29,6 +29,7 @@ import styles from './CartPage.module.scss';
 const CartPage = () => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { userInfo } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const countItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
@@ -179,7 +180,11 @@ const CartPage = () => {
           <ListItem>
             <CustomButton
               text="Proceed To Checkout"
-              onClick={() => console.log('Proceed To Checkout')}
+              onClick={() =>
+                navigate(
+                  userInfo === null ? '/login?redirect=shipping' : '/shipping',
+                )
+              }
             />
           </ListItem>
         </List>
