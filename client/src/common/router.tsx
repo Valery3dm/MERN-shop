@@ -4,8 +4,9 @@ import {
   Route,
 } from 'react-router-dom';
 
-import HomePage from '../pages/HamePage';
+import PrivateRoute from './PrivateRoute';
 import App from '../App';
+import HomePage from '../pages/HamePage';
 import ProductPage from '../pages/ProductPage';
 import CartPage from '../pages/CartPage';
 import LoginPage from '../pages/LoginPage';
@@ -20,7 +21,10 @@ const router = createBrowserRouter(
       <Route path="/cart" element={<CartPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/shipping" element={<ShippingPage />} />
+
+      <Route path='' element={<PrivateRoute />}>
+        <Route path="/shipping" element={<ShippingPage />} />
+      </Route>
     </Route>,
   ),
 );
