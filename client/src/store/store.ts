@@ -5,10 +5,12 @@ import {
 } from '@reduxjs/toolkit';
 import { api } from './services/api';
 import cartSliceReducer from './slices/cartSlice';
+import authSliceReducer from './slices/authSlice';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   cart: cartSliceReducer,
+  auth: authSliceReducer,
 });
 
 export const setupStore = () => {

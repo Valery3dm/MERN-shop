@@ -12,17 +12,24 @@ import {
   Badge,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-
-import { useAppSelector } from '../../hooks/redux';
 import StoreIcon from '@mui/icons-material/Store';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import { useLogoutMutation } from '../../store/services/usersApi';
+import { logout } from '../../store/slices/authSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+
 import styles from './Header.module.scss';
 
 const Header: FC = () => {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { userInfo } = useAppSelector((state) => state.auth);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const [logoutApiCall] = useLogoutMutation();
+
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,8 +41,16 @@ const Header: FC = () => {
     navigate('/cart');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     handleCloseUserMenu();
+
+    try {
+      await logoutApiCall('User').unwrap();
+      dispatch(logout());
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const desktopBar = (): JSX.Element => (
@@ -66,23 +81,23 @@ const Header: FC = () => {
     >
       <Badge
         color="secondary"
+        className={styles.menuOptionBtn}
         badgeContent={cartItems.length}
+        onClick={() => navigate('/cart')}
         max={99}
         showZero
       >
         <ShoppingCartIcon sx={{ mr: 0.5 }} />
-        <Typography
-          textAlign="center"
-          color="white"
-          onClick={() => navigate('/cart')}
-        >
+        <Typography textAlign="center" color="white">
           Cart
         </Typography>
       </Badge>
-      <PersonIcon sx={{ mr: 0.5, ml: 2 }} />
-      <Typography textAlign="center" color="white">
-        Sign In
-      </Typography>
+      <Box className={styles.menuOptionBtn} onClick={() => navigate('/login')}>
+        <PersonIcon sx={{ mr: 0.5, ml: 2 }} />
+        <Typography textAlign="center" color="white">
+          Sign In
+        </Typography>
+      </Box>
     </Box>
   );
 
@@ -109,15 +124,34 @@ const Header: FC = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
+        <Badge
+          color="secondary"
+          className={styles.menuOptionBtn}
+          badgeContent={cartItems.length}
+          onClick={() => navigate('/cart')}
+          max={99}
+          showZero
+        >
+          <Typography
+            textAlign="center"
+            color="black"
+            onClick={handleCloseUserMenu}
+            sx={{
+              px: 2,
+              '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+            }}
+          >
+            Cart
+          </Typography>
+        </Badge>
         <Typography
           textAlign="center"
-          color="black"
-          onClick={handleCloseUserMenu}
-          sx={{ px: 2 }}
+          onClick={handleLogout}
+          sx={{
+            px: 2,
+            '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+          }}
         >
-          Cart
-        </Typography>
-        <Typography textAlign="center" onClick={handleLogout} sx={{ px: 2 }}>
           Logout
         </Typography>
       </Menu>
@@ -132,7 +166,7 @@ const Header: FC = () => {
             {desktopBar()}
             {mobileBar()}
           </Box>
-          <Box>{true ? unAuthorizedUser() : authorizedUser()}</Box>
+          <Box>{userInfo ? authorizedUser() : unAuthorizedUser()}</Box>
         </Toolbar>
       </Container>
     </AppBar>

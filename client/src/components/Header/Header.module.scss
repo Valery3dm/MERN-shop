@@ -7,6 +7,21 @@
     align-items: center;
     justify-content: space-between;
 
+    .unAuthorized {
+
+      .menuOptionBtn {
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+          transition: all 0.5s ease-out;
+        }
+      }
+      
+    }
+
     .logoDesktopNav {
       display: flex;
       flex-direction: row;

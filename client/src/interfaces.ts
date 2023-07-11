@@ -17,8 +17,17 @@ type Qty = {
 
 export type ProductQty = Product & Qty;
 
+export type ShippingAddress = {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
 export interface CartState {
   cartItems: ProductQty[];
+  shippingAddress: ShippingAddress,
+  paymentMethod: string,
   itemsPrice: number;
   shippingPrice: number;
   taxPrice: number;
