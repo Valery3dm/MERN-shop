@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { saveShippingAddress } from '../../store/slices/cartSlice';
 
 import FormContainer from '../../components/FormContainer/FormContainer';
+import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
 import CustomButton from '../../common/CustomButton/CustomButton';
 
 const ShippingPage = () => {
@@ -33,6 +34,8 @@ const ShippingPage = () => {
   return (
     <FormContainer>
       <>
+        <CheckoutSteps step1 step2 />
+
         <Typography variant="h4">Shipping</Typography>
         <>
           <FormControl margin="normal" fullWidth>
