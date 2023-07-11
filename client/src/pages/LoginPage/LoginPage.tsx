@@ -60,6 +60,7 @@ const LoginPage = () => {
             <Input
               id="email-input"
               aria-describedby="email-helper-text"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <FormHelperText id="email-helper-text">
@@ -72,6 +73,7 @@ const LoginPage = () => {
               id="pass-input"
               type='password'
               aria-describedby="pass-helper-text"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <FormHelperText id="pass-helper-text">

@@ -67,6 +67,7 @@ const RegisterPage = () => {
             <Input
               id="name-input"
               aria-describedby="name-helper-text"
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <FormHelperText id="name-helper-text">
@@ -79,6 +80,7 @@ const RegisterPage = () => {
             <Input
               id="email-input"
               aria-describedby="email-helper-text"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <FormHelperText id="email-helper-text">
@@ -92,6 +94,7 @@ const RegisterPage = () => {
               id="pass-input"
               type='password'
               aria-describedby="pass-helper-text"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <FormHelperText id="pass-helper-text">
@@ -105,6 +108,7 @@ const RegisterPage = () => {
               id="confirm-pass-input"
               type='password'
               aria-describedby="confirm-pass-helper-text"
+              value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <FormHelperText id="confirm-pass-helper-text">
