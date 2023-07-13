@@ -4,20 +4,38 @@ import { OrderResponse, OrderState } from '../../interfaces';
 
 export const ordersApi = api.injectEndpoints({
   endpoints: (build) => ({
-    createOrder: build.mutation<OrderResponse , OrderState>({
+    createOrder: build.mutation<OrderResponse, OrderState>({
       query: (order) => ({
         url: URLs.ORDERS_URL,
         method: 'POST',
         body: { ...order },
       }),
     }),
-    getOrderDetails: build.query<OrderResponse , string | undefined>({
+    getOrderDetails: build.query<OrderResponse, string | undefined>({
       query: (orderId: string = '') => ({
         url: `${URLs.ORDERS_URL}/${orderId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    payOrder: build.mutation<any, { orderId: string; details: any }>({
+      query: ({ orderId, details }) => ({
+        url: `${URLs.ORDERS_URL}/${orderId}/pay`,
+        method: 'PUT',
+        body: { ...details },
+      }),
+    }),
+    getPayPalClientId: build.query({
+      query: () => ({
+        url: URLs.PAYPAL_URL,
       }),
       keepUnusedDataFor: 5,
     }),
   }),
 });
 
-export const { useCreateOrderMutation, useGetOrderDetailsQuery } = ordersApi;
+export const {
+  useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPayPalClientIdQuery,
+} = ordersApi;
