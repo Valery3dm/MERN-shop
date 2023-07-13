@@ -68,7 +68,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }: CheckoutStepsProps) => {
   ];
 
   return (
-    <Stack spacing={2} sx={{ my: 3 }}>
+    <Stack spacing={2} sx={{ my: 3, alignItems: 'center' }}>
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"

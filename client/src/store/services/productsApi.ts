@@ -1,5 +1,6 @@
-import { URLs } from '../../constants';
 import { api } from './api';
+
+import { URLs } from '../../constants';
 
 import { Product } from '../../interfaces';
 
