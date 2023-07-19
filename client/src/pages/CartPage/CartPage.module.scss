@@ -1,3 +1,11 @@
+.backBtn {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .mobileView {
   display: flex;
   flex-direction: row;

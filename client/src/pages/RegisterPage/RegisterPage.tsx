@@ -125,8 +125,7 @@ const RegisterPage = () => {
             <Typography
               sx={{
                 padding: '0 10px',
-                transition: 'all .2s ease-in-out',
-                '&:hover': { transform: 'scale(1.2)' },
+                '&:hover': { textDecoration: 'underline' },
               }}
             >
               Login

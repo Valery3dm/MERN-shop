@@ -12,7 +12,12 @@ import {
   Typography,
 } from '@mui/material';
 import { toast } from 'react-toastify';
-import { PayPalButtons, SCRIPT_LOADING_STATE, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import {
+  PayPalButtons,
+  SCRIPT_LOADING_STATE,
+  usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
+// import { Order, Actions, OnApproveData } from 'paypal-checkout';
 
 import {
   useGetOrderDetailsQuery,
@@ -23,6 +28,7 @@ import { useAppSelector } from '../../hooks/redux';
 
 import Message from '../../common/Message/Message';
 import Loader from '../../common/Loader/Loader';
+import CustomButton from '../../common/CustomButton/CustomButton';
 
 const OrderPage = () => {
   const { id: orderId } = useParams();
@@ -55,7 +61,10 @@ const OrderPage = () => {
             currency: 'USD',
           },
         });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' as SCRIPT_LOADING_STATE });
+        paypalDispatch({
+          type: 'setLoadingStatus',
+          value: 'pending' as SCRIPT_LOADING_STATE,
+        });
       };
 
       if (order && !order.isPaid) {
@@ -65,6 +74,46 @@ const OrderPage = () => {
       }
     }
   }, [order, paypal, paypalDispatch, loadingPayPal, errorPayPal]);
+
+  const onApproveTest = async () => {
+    orderId && (await payOrder({ orderId, details: { payer: {} } }));
+    refetch();
+    toast.success('Payment successful');
+  };
+
+  const onApprove = (data: any, actions: any) => {
+    return actions.order.capture().then(async function (details: any) {
+      if (orderId) {
+        try {
+          await payOrder({ orderId, details });
+          refetch();
+          toast.success('Payment successful');
+        } catch (err: any) {
+          toast.error(err?.data?.message || err?.message);
+        }
+      } else {
+        toast.error('This order does not available anymore');
+      }
+    });
+  };
+
+  const createOrder = (data: any, actions: any) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: order?.totalPrice,
+          },
+        },
+      ],
+    }).then((orderId: string) => {
+      return orderId;
+    })
+  };
+
+  const onError = (err: any) => {
+    toast.error(err.message);
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -288,7 +337,29 @@ const OrderPage = () => {
                 </ListItem>
 
                 <ListItem>
-                  {/* TODO: PAY ORDER PLACEHOLDER */}
+                  {!order?.isPaid && (
+                    <Box>
+                      {loadingPay && <Loader />}
+
+                      {isPending ? (
+                        <Loader />
+                      ) : (
+                        <Box>
+                          <CustomButton
+                            text="Test Pay Order"
+                            onClick={onApproveTest}
+                          />
+                          <Box>
+                            <PayPalButtons
+                              createOrder={createOrder}
+                              onApprove={onApprove}
+                              onError={onError}
+                            ></PayPalButtons>
+                          </Box>
+                        </Box>
+                      )}
+                    </Box>
+                  )}
                   {/* MARK AS DELIVERED PLACEHOLDER */}
                 </ListItem>
               </List>
