@@ -98,17 +98,19 @@ const OrderPage = () => {
   };
 
   const createOrder = (data: any, actions: any) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: order?.totalPrice,
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: {
+              value: order?.totalPrice,
+            },
           },
-        },
-      ],
-    }).then((orderId: string) => {
-      return orderId;
-    })
+        ],
+      })
+      .then((orderId: string) => {
+        return orderId;
+      });
   };
 
   const onError = (err: any) => {
@@ -338,17 +340,17 @@ const OrderPage = () => {
 
                 <ListItem>
                   {!order?.isPaid && (
-                    <Box>
+                    <Box sx={{ width: '100%' }}>
                       {loadingPay && <Loader />}
 
                       {isPending ? (
                         <Loader />
                       ) : (
                         <Box>
-                          <CustomButton
+                          {/* <CustomButton
                             text="Test Pay Order"
                             onClick={onApproveTest}
-                          />
+                          /> */}
                           <Box>
                             <PayPalButtons
                               createOrder={createOrder}

@@ -30,6 +30,11 @@ export const ordersApi = api.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getMyOrders: build.query({
+      query: () => ({
+        url: `${URLs.ORDERS_URL}/mine`,
+      }),
+    }),
   }),
 });
 
@@ -38,4 +43,5 @@ export const {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useGetMyOrdersQuery
 } = ordersApi;

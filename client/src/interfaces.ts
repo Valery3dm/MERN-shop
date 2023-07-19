@@ -55,8 +55,8 @@ export interface OrderResponse extends OrderState {
   user: UserResponse;
   isPaid: Boolean;
   isDelivered: Boolean;
-  createdAt: string;
-  updatedAt: string;
-  paidAt: string;
-  deliveredAt: string;
+  createdAt: Date;
+  updatedAt: Date;
+  paidAt: Date;
+  deliveredAt: Date;
 }
