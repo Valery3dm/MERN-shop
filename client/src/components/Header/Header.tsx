@@ -38,7 +38,6 @@ const Header: FC = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    navigate('/cart');
   };
 
   const handleLogout = async () => {
@@ -138,7 +137,7 @@ const Header: FC = () => {
             onClick={handleCloseUserMenu}
             sx={{
               px: 2,
-              '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+              '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
             }}
           >
             Cart
@@ -146,10 +145,20 @@ const Header: FC = () => {
         </Badge>
         <Typography
           textAlign="center"
+          onClick={() => navigate('/profile')}
+          sx={{
+            px: 2,
+            '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+          }}
+        >
+          Profile
+        </Typography>
+        <Typography
+          textAlign="center"
           onClick={handleLogout}
           sx={{
             px: 2,
-            '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+            '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
           }}
         >
           Logout
