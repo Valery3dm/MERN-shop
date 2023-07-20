@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import styles from './CustomButton.module.scss';
 
 type CustomButtonProps = {
-  text: string;
+  text: string | JSX.Element;
   disabled?: boolean;
   onClick?: () => void;
 };

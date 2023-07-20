@@ -154,38 +154,40 @@ const Header: FC = () => {
           Profile
         </Typography>
         {userInfo.isAdmin && (
-          <>
-            <Typography
-              textAlign="start"
-              onClick={() => navigate('/admin/productlist')}
-              sx={{
-                px: 2,
-                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-              }}
-            >
-              Products
-            </Typography>
-            <Typography
-              textAlign="start"
-              onClick={() => navigate('/admin/userlist')}
-              sx={{
-                px: 2,
-                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-              }}
-            >
-              Users
-            </Typography>
-            <Typography
-              textAlign="start"
-              onClick={() => navigate('/admin/orderlist')}
-              sx={{
-                px: 2,
-                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-              }}
-            >
-              Orders
-            </Typography>
-          </>
+          <Typography
+            textAlign="start"
+            onClick={() => navigate('/admin/productlist')}
+            sx={{
+              px: 2,
+              '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+            }}
+          >
+            Products
+          </Typography>
+        )}
+        {userInfo.isAdmin && (
+          <Typography
+            textAlign="start"
+            onClick={() => navigate('/admin/userlist')}
+            sx={{
+              px: 2,
+              '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+            }}
+          >
+            Users
+          </Typography>
+        )}
+        {userInfo.isAdmin && (
+          <Typography
+            textAlign="start"
+            onClick={() => navigate('/admin/orderlist')}
+            sx={{
+              px: 2,
+              '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+            }}
+          >
+            Orders
+          </Typography>
         )}
         <Typography
           textAlign="start"
