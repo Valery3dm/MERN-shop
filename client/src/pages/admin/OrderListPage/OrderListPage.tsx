@@ -1,7 +1,16 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { Typography, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import {
+  Typography,
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@mui/material';
 
 import { useGetOrdersQuery } from '../../../store/services/ordersApi';
 
@@ -15,13 +24,13 @@ const OrderListPage = () => {
   return (
     <>
       <Typography variant="h4">Orders</Typography>
-      {isLoading ? <Loader /> : error ? (<Message severity='error'>{`${error}`}</Message>) : (
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message severity="error">{`${error}`}</Message>
+      ) : (
         <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 650 }}
-            size="small"
-            aria-label="a dense table"
-          >
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
