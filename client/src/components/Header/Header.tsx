@@ -132,7 +132,7 @@ const Header: FC = () => {
           showZero
         >
           <Typography
-            textAlign="center"
+            textAlign="start"
             color="black"
             onClick={handleCloseUserMenu}
             sx={{
@@ -144,7 +144,7 @@ const Header: FC = () => {
           </Typography>
         </Badge>
         <Typography
-          textAlign="center"
+          textAlign="start"
           onClick={() => navigate('/profile')}
           sx={{
             px: 2,
@@ -153,8 +153,42 @@ const Header: FC = () => {
         >
           Profile
         </Typography>
+        {userInfo.isAdmin && (
+          <>
+            <Typography
+              textAlign="start"
+              onClick={() => navigate('/admin/productlist')}
+              sx={{
+                px: 2,
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+              }}
+            >
+              Products
+            </Typography>
+            <Typography
+              textAlign="start"
+              onClick={() => navigate('/admin/userlist')}
+              sx={{
+                px: 2,
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+              }}
+            >
+              Users
+            </Typography>
+            <Typography
+              textAlign="start"
+              onClick={() => navigate('/admin/orderlist')}
+              sx={{
+                px: 2,
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+              }}
+            >
+              Orders
+            </Typography>
+          </>
+        )}
         <Typography
-          textAlign="center"
+          textAlign="start"
           onClick={handleLogout}
           sx={{
             px: 2,
