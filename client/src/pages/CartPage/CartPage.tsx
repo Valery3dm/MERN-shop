@@ -43,7 +43,9 @@ const CartPage = () => {
       <Message severity="info">
         <Box>
           <Typography>Cart list is empty</Typography>
-          <Typography onClick={() => navigate(-1)}>Go Back</Typography>
+          <Typography onClick={() => navigate(-1)} className={styles.backBtn}>
+            Go Back
+          </Typography>
         </Box>
       </Message>
     );

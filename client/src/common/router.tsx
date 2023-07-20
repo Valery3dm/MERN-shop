@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
+import AdminRoute from './AdminRoute/AdminRoute';
 import App from '../App';
 import HomePage from '../pages/HamePage';
 import ProductPage from '../pages/ProductPage';
@@ -15,6 +16,8 @@ import ShippingPage from '../pages/ShippingPage';
 import PaymentPage from '../pages/PaymentPage';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
 import OrderPage from '../pages/OrderPage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
+import OrderListPage from '../components/admin/OrderListPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +33,11 @@ const router = createBrowserRouter(
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/placeorder" element={<PlaceOrderPage />} />
         <Route path="/order/:id" element={<OrderPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Route>
+
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/admin/orderlist" element={<OrderListPage />} />
       </Route>
     </Route>,
   ),

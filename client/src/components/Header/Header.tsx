@@ -38,7 +38,6 @@ const Header: FC = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    navigate('/cart');
   };
 
   const handleLogout = async () => {
@@ -133,23 +132,67 @@ const Header: FC = () => {
           showZero
         >
           <Typography
-            textAlign="center"
+            textAlign="start"
             color="black"
             onClick={handleCloseUserMenu}
             sx={{
               px: 2,
-              '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+              '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
             }}
           >
             Cart
           </Typography>
         </Badge>
         <Typography
-          textAlign="center"
+          textAlign="start"
+          onClick={() => navigate('/profile')}
+          sx={{
+            px: 2,
+            '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+          }}
+        >
+          Profile
+        </Typography>
+        {userInfo.isAdmin && (
+          <>
+            <Typography
+              textAlign="start"
+              onClick={() => navigate('/admin/productlist')}
+              sx={{
+                px: 2,
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+              }}
+            >
+              Products
+            </Typography>
+            <Typography
+              textAlign="start"
+              onClick={() => navigate('/admin/userlist')}
+              sx={{
+                px: 2,
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+              }}
+            >
+              Users
+            </Typography>
+            <Typography
+              textAlign="start"
+              onClick={() => navigate('/admin/orderlist')}
+              sx={{
+                px: 2,
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+              }}
+            >
+              Orders
+            </Typography>
+          </>
+        )}
+        <Typography
+          textAlign="start"
           onClick={handleLogout}
           sx={{
             px: 2,
-            '&:hover': { cursor: 'pointer', backgroundColor: '#0000000d' },
+            '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
           }}
         >
           Logout
