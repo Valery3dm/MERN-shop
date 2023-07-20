@@ -42,6 +42,12 @@ export const ordersApi = api.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    deliverOrder: build.mutation({
+      query: (orderId) => ({
+        url: `${URLs.ORDERS_URL}/${orderId}/deliver`,
+        method: 'PUT',
+      }),
+    }),
   }),
 });
 
@@ -51,5 +57,6 @@ export const {
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
   useGetMyOrdersQuery,
-  useGetOrdersQuery
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
 } = ordersApi;

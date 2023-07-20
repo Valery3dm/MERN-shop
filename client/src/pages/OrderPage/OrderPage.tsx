@@ -23,6 +23,7 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useDeliverOrderMutation,
 } from '../../store/services/ordersApi';
 import { useAppSelector } from '../../hooks/redux';
 
@@ -40,6 +41,9 @@ const OrderPage = () => {
   } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -75,11 +79,11 @@ const OrderPage = () => {
     }
   }, [order, paypal, paypalDispatch, loadingPayPal, errorPayPal]);
 
-  const onApproveTest = async () => {
-    orderId && (await payOrder({ orderId, details: { payer: {} } }));
-    refetch();
-    toast.success('Payment successful');
-  };
+  // const onApproveTest = async () => {
+  //   orderId && (await payOrder({ orderId, details: { payer: {} } }));
+  //   refetch();
+  //   toast.success('Payment successful');
+  // };
 
   const onApprove = (data: any, actions: any) => {
     return actions.order.capture().then(async function (details: any) {
@@ -124,6 +128,16 @@ const OrderPage = () => {
   if (error) {
     return <Message severity="error">{error as string}</Message>;
   }
+
+  const deliverOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success('Order delivered');
+    } catch (err: any) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   return (
     <>
@@ -179,7 +193,9 @@ const OrderPage = () => {
                 />
               </Box>
               {order?.isDelivered ? (
-                <Message severity="success">{`Delivered on ${order.deliveredAt}`}</Message>
+                <Message severity="success">{`Delivered on ${
+                  new Date(order.deliveredAt).toISOString().split('T')[0]
+                }`}</Message>
               ) : (
                 <Message severity="warning">Not Delivered</Message>
               )}
@@ -210,7 +226,9 @@ const OrderPage = () => {
                 />
               </Box>
               {order?.isPaid ? (
-                <Message severity="success">{`Paid on ${order.paidAt}`}</Message>
+                <Message severity="success">{`Paid on ${
+                  new Date(order.paidAt).toISOString().split('T')[0]
+                }`}</Message>
               ) : (
                 <Message severity="warning">Not Paid</Message>
               )}
@@ -362,7 +380,19 @@ const OrderPage = () => {
                       )}
                     </Box>
                   )}
-                  {/* MARK AS DELIVERED PLACEHOLDER */}
+                </ListItem>
+                <ListItem>
+                  {loadingDeliver && <Loader />}
+
+                  {userInfo &&
+                    userInfo.isAdmin &&
+                    order?.isPaid &&
+                    !order.isDelivered && (
+                      <CustomButton
+                        text="Mark as Delivered"
+                        onClick={deliverOrderHandler}
+                      />
+                    )}
                 </ListItem>
               </List>
             </CardContent>
