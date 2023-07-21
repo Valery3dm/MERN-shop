@@ -58,7 +58,7 @@ const OrderListPage = () => {
                     {new Date(order.createdAt).toISOString().split('T')[0]}
                   </TableCell>
                   <TableCell align="right">
-                    {order.totalPrice.toFixed(2)}
+                    ${order.totalPrice.toFixed(2)}
                   </TableCell>
                   <TableCell align="right">
                     {order.isPaid ? (

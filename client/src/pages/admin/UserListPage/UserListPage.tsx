@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   Typography,
   Paper,
@@ -12,22 +13,35 @@ import {
   TableBody,
 } from '@mui/material';
 
-import { useGetUsersQuery } from '../../../store/services/usersApi';
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+} from '../../../store/services/usersApi';
 
 import Loader from '../../../common/Loader';
 import Message from '../../../common/Message';
 import CustomButton from '../../../common/CustomButton';
 
 const UserListPage = () => {
-  const { data: users, isLoading, error } = useGetUsersQuery('');
+  const { data: users, isLoading, error, refetch } = useGetUsersQuery('');
+  const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
 
-  const deleteHandler = (id: string) => {
-
-  }
+  const deleteHandler = async (id: string) => {
+    if (window.confirm('Are you sure?')) {
+      try {
+        await deleteUser(id);
+        refetch();
+        toast.success('User deleted');
+      } catch (err: any) {
+        toast.error(err?.data?.message || err.message);
+      }
+    }
+  };
 
   return (
     <>
       <Typography variant="h4">Users</Typography>
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -54,9 +68,7 @@ const UserListPage = () => {
                   <TableCell component="th" scope="row">
                     {user._id}
                   </TableCell>
-                  <TableCell align="right">
-                    {user.name}
-                  </TableCell>
+                  <TableCell align="right">{user.name}</TableCell>
                   <TableCell align="right">
                     <a href={`mailto:${user.email}`}>{user.email}</a>
                   </TableCell>
@@ -73,7 +85,10 @@ const UserListPage = () => {
                     </Link>
                   </TableCell>
                   <TableCell align="right">
-                      <CustomButton text={<FaTrash />} onClick={() => deleteHandler(user._id)}/>
+                    <CustomButton
+                      text={<FaTrash />}
+                      onClick={() => deleteHandler(user._id)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
