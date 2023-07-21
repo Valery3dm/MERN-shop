@@ -43,6 +43,20 @@ export const usersApi = api.injectEndpoints({
         method: 'DELETE'
       }),
     }),
+    getUserDetails: build.query({
+      query: (userId) => ({
+        url: `${URLs.USERS_URL}/${userId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    updateUser: build.mutation({
+      query: (data) => ({
+        url: `${URLs.USERS_URL}/${data._id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
 });
 
@@ -52,5 +66,7 @@ export const {
   useLogoutMutation,
   useProfileMutation,
   useGetUsersQuery,
-  useDeleteUserMutation
+  useDeleteUserMutation,
+  useGetUserDetailsQuery,
+  useUpdateUserMutation
 } = usersApi;

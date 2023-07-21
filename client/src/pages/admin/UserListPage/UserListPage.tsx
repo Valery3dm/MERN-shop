@@ -80,7 +80,7 @@ const UserListPage = () => {
                     )}
                   </TableCell>
                   <TableCell align="right">
-                    <Link to={`admin/user/${user._id}/edit`}>
+                    <Link to={`/admin/user/${user._id}/edit`}>
                       <CustomButton text={<FaEdit />} />
                     </Link>
                   </TableCell>
