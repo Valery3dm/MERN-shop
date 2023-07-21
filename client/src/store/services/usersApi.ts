@@ -30,6 +30,13 @@ export const usersApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    getUsers: build.query({
+      query: () => ({
+        url: URLs.USERS_URL,
+      }),
+      providesTags: ['Users'],
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useRegisterMutation,
   useLogoutMutation,
   useProfileMutation,
+  useGetUsersQuery,
 } = usersApi;

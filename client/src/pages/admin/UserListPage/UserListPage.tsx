@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import {
   Typography,
@@ -12,18 +12,22 @@ import {
   TableBody,
 } from '@mui/material';
 
-import { useGetOrdersQuery } from '../../../store/services/ordersApi';
+import { useGetUsersQuery } from '../../../store/services/usersApi';
 
 import Loader from '../../../common/Loader';
 import Message from '../../../common/Message';
 import CustomButton from '../../../common/CustomButton';
 
-const OrderListPage = () => {
-  const { data: orders, isLoading, error } = useGetOrdersQuery('');
+const UserListPage = () => {
+  const { data: users, isLoading, error } = useGetUsersQuery('');
+
+  const deleteHandler = (id: string) => {
+
+  }
 
   return (
     <>
-      <Typography variant="h4">Orders</Typography>
+      <Typography variant="h4">Users</Typography>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -34,50 +38,42 @@ const OrderListPage = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell align="right">USER</TableCell>
-                <TableCell align="right">DATE</TableCell>
-                <TableCell align="right">TOTAL</TableCell>
-                <TableCell align="right">PAID</TableCell>
-                <TableCell align="right">DELIVERED</TableCell>
+                <TableCell align="right">NAME</TableCell>
+                <TableCell align="right">EMAIL</TableCell>
+                <TableCell align="right">ADMIN</TableCell>
+                <TableCell align="right"></TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order: any) => (
+              {users.map((user: any) => (
                 <TableRow
-                  key={order._id}
+                  key={user._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {order._id}
+                    {user._id}
                   </TableCell>
                   <TableCell align="right">
-                    {order.user && order.user.name}
+                    {user.name}
                   </TableCell>
                   <TableCell align="right">
-                    {new Date(order.createdAt).toISOString().split('T')[0]}
+                    <a href={`mailto:${user.email}`}>{user.email}</a>
                   </TableCell>
                   <TableCell align="right">
-                    {order.totalPrice.toFixed(2)}
-                  </TableCell>
-                  <TableCell align="right">
-                    {order.isPaid ? (
-                      new Date(order.paidAt).toISOString().split('T')[0]
+                    {user.isAdmin ? (
+                      <FaCheck style={{ color: 'green' }} />
                     ) : (
                       <FaTimes style={{ color: 'red' }} />
                     )}
                   </TableCell>
                   <TableCell align="right">
-                    {order.isDelivered ? (
-                      new Date(order.deliveredAt).toISOString().split('T')[0]
-                    ) : (
-                      <FaTimes style={{ color: 'red' }} />
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Link to={`/order/${order._id}`}>
-                      <CustomButton text="details" />
+                    <Link to={`admin/user/${user._id}/edit`}>
+                      <CustomButton text={<FaEdit />} />
                     </Link>
+                  </TableCell>
+                  <TableCell align="right">
+                      <CustomButton text={<FaTrash />} onClick={() => deleteHandler(user._id)}/>
                   </TableCell>
                 </TableRow>
               ))}
@@ -89,4 +85,4 @@ const OrderListPage = () => {
   );
 };
 
-export default OrderListPage;
+export default UserListPage;
