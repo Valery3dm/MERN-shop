@@ -4,6 +4,6 @@ import { URLs } from '../../constants';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: URLs.BASE_URL }),
-  tagTypes: ['Product', 'Order', 'User'],
+  tagTypes: ['Product', 'Products', 'Order', 'User'],
   endpoints: build => ({}),
 });

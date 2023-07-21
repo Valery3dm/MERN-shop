@@ -2,7 +2,7 @@ import { api } from './api';
 
 import { URLs } from '../../constants';
 
-import { Product } from '../../interfaces';
+import { Product, UpdateProductBody } from '../../interfaces';
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -10,6 +10,7 @@ export const productsApi = api.injectEndpoints({
       query: () => ({
         url: URLs.PRODUCTS_URL,
       }),
+      providesTags: ['Products'],
       keepUnusedDataFor: 5,
     }),
     getProductDetails: build.query<Product, string | undefined>({
@@ -25,6 +26,14 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+    updateProduct: build.mutation<Product, UpdateProductBody>({
+      query: (data) => ({
+        url: `${URLs.PRODUCTS_URL}/${data._id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Products'],
+    }),
   }),
 });
 
@@ -32,4 +41,5 @@ export const {
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
 } = productsApi;

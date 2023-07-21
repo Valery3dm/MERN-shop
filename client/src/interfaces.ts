@@ -17,6 +17,17 @@ type Qty = {
 
 export type ProductQty = Product & Qty;
 
+export interface UpdateProductBody {
+  _id?: string;
+  name: string;
+  price: number;
+  image: string;
+  brand: string;
+  category: string;
+  countInStock: number;
+  description: string;
+}
+
 export type ShippingAddress = {
   address: string;
   city: string;
