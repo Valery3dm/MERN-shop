@@ -61,7 +61,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.countInStock = countInStock;
 
     const updateProduct = await product.save();
-    res.json(updateProduct);
+    res.status(200).json(updateProduct);
   } else {
     res.status(404);
     throw new Error('Resource not found');
@@ -77,8 +77,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
   if (product) {
     await Product.deleteOne({ _id: product._id });
-    res.status(200);
-    res.json(product);
+    res.status(200).json({ message: 'Product deleted successfully '});
   } else {
     res.status(404);
     throw new Error('Resource not found');
