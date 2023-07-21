@@ -18,7 +18,18 @@ export const productsApi = api.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createProduct: build.mutation<Product, string | undefined>({
+      query: () => ({
+        url: URLs.PRODUCTS_URL,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Product'],
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductDetailsQuery } = productsApi;
+export const {
+  useGetProductsQuery,
+  useGetProductDetailsQuery,
+  useCreateProductMutation,
+} = productsApi;

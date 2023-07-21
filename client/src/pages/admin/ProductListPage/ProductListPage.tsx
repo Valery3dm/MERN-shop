@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import {
   Grid,
   Typography,
@@ -13,7 +14,7 @@ import {
   TableContainer,
 } from '@mui/material';
 
-import { useGetProductsQuery } from '../../../store/services/productsApi';
+import { useCreateProductMutation, useGetProductsQuery } from '../../../store/services/productsApi';
 import { Product } from '../../../interfaces';
 
 import CustomButton from '../../../common/CustomButton/CustomButton';
@@ -21,7 +22,19 @@ import Loader from '../../../common/Loader/Loader';
 import Message from '../../../common/Message/Message';
 
 const ProductListPage = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const [createProduct, {isLoading: loadingCreate}] = useCreateProductMutation();
+
+  const createProductHandler = async () => {
+    if (window.confirm('Are you sure you want to create a new product?')) {
+      try {
+        await createProduct('');
+        refetch();
+      } catch (err: any) {
+        toast.error(err?.data?.message || err?.error)
+      }
+    }
+  }
 
   const deleteHandler = (id: string) => {
     console.log('delete', id);
@@ -36,11 +49,11 @@ const ProductListPage = () => {
         <Grid item xs={12} sm={12} md={3}>
           <CustomButton
             text="Create Product"
-            onClick={() => console.log('Create Product')}
+            onClick={createProductHandler}
           />
         </Grid>
       </Grid>
-
+      {loadingCreate && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
