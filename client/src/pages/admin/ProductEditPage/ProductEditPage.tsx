@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent  } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
@@ -15,6 +15,7 @@ import {
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } from '../../../store/services/productsApi';
 
 import FormContainer from '../../../components/FormContainer/FormContainer';
@@ -36,6 +37,9 @@ const ProductEditPage = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
+
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
   const [image, setImage] = useState<string>('');
@@ -55,6 +59,24 @@ const ProductEditPage = () => {
       setDescription(product.description);
     }
   }, [product]);
+
+  const uploadFileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+debugger
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+
+      try {
+        const res = await uploadProductImage(formData).unwrap();
+        toast.success(res.message);
+        setImage(res.image);
+      } catch (err: any) {
+        toast.error(err?.data?.message || err?.message);
+      }
+    }
+
+  }
 
   const onSubmit = async () => {
     const updatedProduct = {
@@ -118,7 +140,27 @@ const ProductEditPage = () => {
               </FormHelperText>
             </FormControl>
 
-            {/* TODO: IMAGE INPUT PLACEHOLDER */}
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="file-input">Image location</InputLabel>
+              <Input
+                id="file-input"
+                type="text"
+                aria-describedby="file-helper-text"
+                value={image}
+                disabled
+              />
+              <TextField
+                type="file"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => uploadFileHandler(e)}
+                variant="outlined"
+                label="Upload File"
+                fullWidth
+                sx={{marginTop: '20px'}}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
 
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="brand-input">Brand</InputLabel>
@@ -164,7 +206,7 @@ const ProductEditPage = () => {
               </FormHelperText>
             </FormControl>
 
-            <FormControl margin="normal" fullWidth>              
+            <FormControl margin="normal" fullWidth>
               <TextField
                 id="description-helper-text"
                 label="Description"

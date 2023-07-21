@@ -34,6 +34,13 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Products'],
     }),
+    uploadProductImage: build.mutation<any, FormData>({
+      query: (data) => ({
+        url: URLs.UPLOAD_URL,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -42,4 +49,5 @@ export const {
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useUploadProductImageMutation
 } = productsApi;
