@@ -2,7 +2,11 @@ import { api } from './api';
 
 import { URLs } from '../../constants';
 
-import { Product, UpdateProductBody } from '../../interfaces';
+import {
+  Product,
+  UpdateProductBody,
+  UploadImageResponse,
+} from '../../interfaces';
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -34,11 +38,17 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Products'],
     }),
-    uploadProductImage: build.mutation<any, FormData>({
+    uploadProductImage: build.mutation<UploadImageResponse, FormData>({
       query: (data) => ({
         url: URLs.UPLOAD_URL,
         method: 'POST',
         body: data,
+      }),
+    }),
+    deleteProduct: build.mutation<Product, string>({
+      query: (productId) => ({
+        url: `${URLs.PRODUCTS_URL}/${productId}`,
+        method: 'DELETE',
       }),
     }),
   }),
@@ -49,5 +59,6 @@ export const {
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
-  useUploadProductImageMutation
+  useUploadProductImageMutation,
+  useDeleteProductMutation,
 } = productsApi;

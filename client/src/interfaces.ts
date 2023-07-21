@@ -71,3 +71,8 @@ export interface OrderResponse extends OrderState {
   paidAt: Date;
   deliveredAt: Date;
 }
+
+export interface UploadImageResponse {
+  image: string;
+  message: string;
+}

@@ -14,7 +14,11 @@ import {
   TableContainer,
 } from '@mui/material';
 
-import { useCreateProductMutation, useGetProductsQuery } from '../../../store/services/productsApi';
+import {
+  useCreateProductMutation,
+  useGetProductsQuery,
+  useDeleteProductMutation,
+} from '../../../store/services/productsApi';
 import { Product } from '../../../interfaces';
 
 import CustomButton from '../../../common/CustomButton/CustomButton';
@@ -23,7 +27,9 @@ import Message from '../../../common/Message/Message';
 
 const ProductListPage = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
-  const [createProduct, {isLoading: loadingCreate}] = useCreateProductMutation();
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
+  const [deleteProduct, {isLoading: loadingDelete}] = useDeleteProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm('Are you sure you want to create a new product?')) {
@@ -31,13 +37,21 @@ const ProductListPage = () => {
         await createProduct('');
         refetch();
       } catch (err: any) {
-        toast.error(err?.data?.message || err?.error)
+        toast.error(err?.data?.message || err?.error);
       }
     }
-  }
+  };
 
-  const deleteHandler = (id: string) => {
-    console.log('delete', id);
+  const deleteHandler = async (id: string) => {
+    if (window.confirm('Are you sure?')) {
+      try {
+        await deleteProduct(id);
+        refetch();
+        toast.success('Product deleted');
+      } catch (err: any) {
+        toast.error(err?.data?.message || err.message);
+      }
+    }
   };
 
   return (
@@ -47,13 +61,11 @@ const ProductListPage = () => {
           <Typography variant="h4">Products</Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={3}>
-          <CustomButton
-            text="Create Product"
-            onClick={createProductHandler}
-          />
+          <CustomButton text="Create Product" onClick={createProductHandler} />
         </Grid>
       </Grid>
       {loadingCreate && <Loader />}
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -92,12 +104,10 @@ const ProductListPage = () => {
                       </Link>
                     </TableCell>
                     <TableCell align="right">
-                      <Link to={`/admin/product/${product._id}/edit`}>
-                        <CustomButton
-                          text={<FaTrash style={{ color: 'red' }} />}
-                          onClick={() => deleteHandler(product._id)}
-                        />
-                      </Link>
+                      <CustomButton
+                        text={<FaTrash style={{ color: 'red' }} />}
+                        onClick={() => deleteHandler(product._id)}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
