@@ -1,0 +1,73 @@
+.backBtn {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.mobileView {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .card {
+    max-width: 300px;
+    margin: 20px;
+
+    .imageWrapper {
+      height: 200px;
+      padding: 1rem;
+
+      .image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .name {
+      height: 60px;
+      overflow: hidden;
+    }
+
+    .cardAction {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 0 0 10px 10px;
+
+      .actionBtn {
+        height: 60px;
+        width: 60px;
+
+        .deleteIcon {
+          color: #000;
+        }
+      }
+    }
+
+  }
+}
+
+@media (min-width: 600px) {
+  .mobileView {
+    display: none;
+  }
+
+  .desktopView {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .desktopView {
+    display: none;
+
+    .actionDesktopBtn {
+      width: 60px;
+      padding: 0;
+    }
+  }
+}

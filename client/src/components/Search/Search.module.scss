@@ -1,0 +1,31 @@
+.searchWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2;
+
+  .searchInput {
+    background-color: #fff;
+    margin: 0 10px 7px 0;
+  }
+
+  .searchBtn {
+    background-color: #fff;
+    color: #000;
+
+    &:hover {
+      background-color: #ffffff60;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .searchBtn {
+      background-color: #000;
+      color: #fff;
+
+      &:hover {
+        background-color: #616161
+      }
+    }
+  }
+}
