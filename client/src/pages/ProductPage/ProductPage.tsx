@@ -16,12 +16,14 @@ import {
 } from '@mui/material';
 
 import { useGetProductDetailsQuery } from '../../store/services/productsApi';
+import { addToCart } from '../../store/slices/cartSlice';
+import { useAppDispatch } from '../../hooks/redux';
+
+import ReviewsSection from '../../components/ReviewsSection/ReviewsSection';
 import CustomRating from '../../components/CustomRating/CustomRating';
 import CustomButton from '../../common/CustomButton/CustomButton';
 import CustomError from '../../common/CustomError/CustomError';
 import Loader from '../../common/Loader/Loader';
-import { useAppDispatch } from '../../hooks/redux';
-import { addToCart } from '../../store/slices/cartSlice';
 
 import styles from './ProductPage.module.scss';
 
@@ -33,6 +35,7 @@ const ProductPage = () => {
     data: product,
     isLoading,
     error,
+    refetch
   } = useGetProductDetailsQuery(productId);
 
   const [qty, setQty] = useState<number>(1);
@@ -189,6 +192,8 @@ const ProductPage = () => {
               </Card>
             </Grid>
           </Grid>
+         
+          <ReviewsSection product={product} productId={productId} refetch={refetch}/>
         </>
       )}
     </>

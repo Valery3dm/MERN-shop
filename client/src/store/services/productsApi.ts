@@ -3,6 +3,7 @@ import { api } from './api';
 import { URLs } from '../../constants';
 
 import {
+  PaginatedProductResponse,
   Product,
   UpdateProductBody,
   UploadImageResponse,
@@ -10,9 +11,12 @@ import {
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query<Product[], void>({
-      query: () => ({
+    getProducts: build.query<PaginatedProductResponse, number>({
+      query: (pageNumber) => ({
         url: URLs.PRODUCTS_URL,
+        params: {
+          pageNumber,
+        }
       }),
       providesTags: ['Products'],
       keepUnusedDataFor: 5,
@@ -51,6 +55,14 @@ export const productsApi = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    createReview: build.mutation<Product, any>({
+      query: (data) => ({
+        url: `${URLs.PRODUCTS_URL}/${data.productId}/reviews`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Product'],
+    }),
   }),
 });
 
@@ -61,4 +73,5 @@ export const {
   useUpdateProductMutation,
   useUploadProductImageMutation,
   useDeleteProductMutation,
+  useCreateReviewMutation
 } = productsApi;

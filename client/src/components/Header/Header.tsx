@@ -82,7 +82,10 @@ const Header: FC = () => {
         color="secondary"
         className={styles.menuOptionBtn}
         badgeContent={cartItems.length}
-        onClick={() => navigate('/cart')}
+        onClick={() => {
+          navigate('/cart');
+          setAnchorElUser(null);
+        }}
         max={99}
         showZero
       >
@@ -91,7 +94,10 @@ const Header: FC = () => {
           Cart
         </Typography>
       </Badge>
-      <Box className={styles.menuOptionBtn} onClick={() => navigate('/login')}>
+      <Box className={styles.menuOptionBtn} onClick={() => {
+        navigate('/login');
+        setAnchorElUser(null);
+      }}>
         <PersonIcon sx={{ mr: 0.5, ml: 2 }} />
         <Typography textAlign="center" color="white">
           Sign In
@@ -127,7 +133,10 @@ const Header: FC = () => {
           color="secondary"
           className={styles.menuOptionBtn}
           badgeContent={cartItems.length}
-          onClick={() => navigate('/cart')}
+          onClick={() => {
+            navigate('/cart');
+            setAnchorElUser(null);
+          }}
           max={99}
           showZero
         >
@@ -145,7 +154,10 @@ const Header: FC = () => {
         </Badge>
         <Typography
           textAlign="start"
-          onClick={() => navigate('/profile')}
+          onClick={() => {
+            navigate('/profile');
+            setAnchorElUser(null);
+          }}
           sx={{
             px: 2,
             '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
@@ -156,7 +168,10 @@ const Header: FC = () => {
         {userInfo.isAdmin && (
           <Typography
             textAlign="start"
-            onClick={() => navigate('/admin/productlist')}
+            onClick={() => {
+              navigate('/admin/productlist');
+              setAnchorElUser(null);
+            }}
             sx={{
               px: 2,
               '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
@@ -168,7 +183,10 @@ const Header: FC = () => {
         {userInfo.isAdmin && (
           <Typography
             textAlign="start"
-            onClick={() => navigate('/admin/userlist')}
+            onClick={() => {
+              navigate('/admin/userlist');
+              setAnchorElUser(null);
+            }}
             sx={{
               px: 2,
               '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
@@ -180,7 +198,10 @@ const Header: FC = () => {
         {userInfo.isAdmin && (
           <Typography
             textAlign="start"
-            onClick={() => navigate('/admin/orderlist')}
+            onClick={() => {
+              navigate('/admin/orderlist');
+              setAnchorElUser(null);
+            }}
             sx={{
               px: 2,
               '&:hover': { cursor: 'pointer', textDecoration: 'underline' },

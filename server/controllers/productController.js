@@ -2,11 +2,17 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import Product from '../models/productModel.js';
 
 // @desc Fetch all products
-// @route GET /api/products
+// @route GET /api/products?pageNumber=
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+  const pageSize = 4;
+  const page = Number(req.query.pageNumber) || 1;
+  const count = await Product.countDocuments();
+
+  const products = await Product.find({})
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({products, page, pages: Math.ceil(count / pageSize)});
 });
 
 // @desc Fetch a product
@@ -85,7 +91,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 // @desc    Create a new review
-// @route   POST /api/product/:id/review
+// @route   POST /api/product/:id/reviews
 // @access  Private
 const createProductReview = asyncHandler(async (req, res) => {
 
@@ -94,7 +100,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 
   if (product) {
     const alreadyReviewed = product.reviews.find(
-      (review) => review.user.toString() === req.user._id
+      (review) => review.user.toString() === req.user._id.toString()
     );
 
     if (alreadyReviewed) {
