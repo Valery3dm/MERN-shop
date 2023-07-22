@@ -11,10 +11,11 @@ import {
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query<PaginatedProductResponse, number>({
-      query: (pageNumber) => ({
+    getProducts: build.query<PaginatedProductResponse, {keyword?: string,  pageNumber?: number}>({
+      query: ({keyword = '', pageNumber = 1}) => ({
         url: URLs.PRODUCTS_URL,
         params: {
+          keyword,
           pageNumber,
         }
       }),
@@ -63,6 +64,12 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+    getTopProducts: build.query<Product[], void>({
+      query: () => ({
+        url: `${URLs.PRODUCTS_URL}/top`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -73,5 +80,6 @@ export const {
   useUpdateProductMutation,
   useUploadProductImageMutation,
   useDeleteProductMutation,
-  useCreateReviewMutation
+  useCreateReviewMutation,
+  useGetTopProductsQuery
 } = productsApi;

@@ -19,11 +19,12 @@ import { useGetProductDetailsQuery } from '../../store/services/productsApi';
 import { addToCart } from '../../store/slices/cartSlice';
 import { useAppDispatch } from '../../hooks/redux';
 
-import ReviewsSection from '../../components/ReviewsSection/ReviewsSection';
-import CustomRating from '../../components/CustomRating/CustomRating';
-import CustomButton from '../../common/CustomButton/CustomButton';
-import CustomError from '../../common/CustomError/CustomError';
-import Loader from '../../common/Loader/Loader';
+import ReviewsSection from '../../components/ReviewsSection';
+import CustomRating from '../../components/CustomRating';
+import CustomButton from '../../common/CustomButton';
+import CustomError from '../../common/CustomError';
+import Loader from '../../common/Loader';
+import Meta from '../../common/Meta';
 
 import styles from './ProductPage.module.scss';
 
@@ -57,6 +58,7 @@ const ProductPage = () => {
     <>
       {product && (
         <>
+          <Meta title={product.name}/>
           <Grid container spacing={3}>
             <Grid
               item

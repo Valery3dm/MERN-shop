@@ -52,7 +52,7 @@ const ProfilePage = () => {
       setName(userInfo.name);
       setEmail(userInfo.email);
     }
-  }, [userInfo.name, userInfo.email]);
+  }, [userInfo, userInfo.name, userInfo.email]);
 
   const onSubmit = async () => {
     if (password !== confirmPassword) {

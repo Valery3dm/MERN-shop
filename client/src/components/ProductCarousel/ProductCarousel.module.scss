@@ -1,0 +1,50 @@
+.container {
+  margin: auto;
+  padding-bottom: 40px;
+  width: 100%;
+
+  .item {
+    height: 40vh;
+    text-align: center;
+    
+    &:hover {
+      cursor: pointer;
+    }
+
+    .image {
+      height: 100%;
+      margin: auto;
+    }
+
+    .descriptionWrapper {
+      background-color: #b3b3b378;
+      height: 120px;
+      
+
+      .product {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    
+  }
+
+  @media (max-width: 600px) {
+    .item {
+      height: 30vh;
+
+      .descriptionWrapper {
+        height: 80px;
+
+        .product {
+          font-size: 18px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
+

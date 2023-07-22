@@ -27,8 +27,11 @@ import Message from '../../../common/Message';
 import Paginate from '../../../components/Paginate';
 
 const ProductListPage = () => {
-  const {pageNumber} = useParams();
-  const { data, isLoading, error, refetch } = useGetProductsQuery(Number(pageNumber));
+  const {pageNumber, keyword} = useParams();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    keyword,
+    pageNumber: Number(pageNumber)
+  });
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
   const [deleteProduct, {isLoading: loadingDelete}] = useDeleteProductMutation();

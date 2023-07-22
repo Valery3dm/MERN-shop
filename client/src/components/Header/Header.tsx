@@ -20,6 +20,8 @@ import { useLogoutMutation } from '../../store/services/usersApi';
 import { logout } from '../../store/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
+import Search from '../Search/Search';
+
 import styles from './Header.module.scss';
 
 const Header: FC = () => {
@@ -231,6 +233,9 @@ const Header: FC = () => {
           <Box>
             {desktopBar()}
             {mobileBar()}
+          </Box>
+          <Box className={styles.searchWrapper}>
+            <Search />
           </Box>
           <Box>{userInfo ? authorizedUser() : unAuthorizedUser()}</Box>
         </Toolbar>
