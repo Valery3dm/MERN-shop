@@ -32,7 +32,7 @@ const ReviewsSection = ({ product, productId, refetch }: ReviewsSectionProps) =>
 
   const { userInfo } = useAppSelector((state) => state.auth);
 
-  const [rating, setRating] = useState<number>(product ? product.rating : 0);
+  const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
 
   const onSubmit = async () => {
@@ -101,11 +101,11 @@ const ReviewsSection = ({ product, productId, refetch }: ReviewsSectionProps) =>
                 <Select
                   labelId="rating-simple-select-label"
                   id="rating-simple-select"
-                  value={rating}
+                  value={rating || ''}
                   label="Rating"
-                  onChange={(e) => setRating(Number(e.target.value))}
+                  onChange={(e) => setRating(e.target.value as number | null)}
                 >
-                  <MenuItem value={0}>Choose...</MenuItem>
+                  <MenuItem value="">Choose...</MenuItem>
                   <MenuItem value={1}>1 - Poor</MenuItem>
                   <MenuItem value={2}>2 - Fair</MenuItem>
                   <MenuItem value={3}>3 - Good</MenuItem>

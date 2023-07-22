@@ -15,7 +15,7 @@ import styles from './ProductCarousel.module.scss';
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
   const navigate = useNavigate();
-  
+
   const settings = {
     dots: true,
     infinite: true,
@@ -37,7 +37,7 @@ const ProductCarousel = () => {
           <Slider {...settings}>
             {products && products.map(product => (
               <Box key={product._id} className={styles.item} onClick={() => navigate(`/product/${product._id}`)}>
-                <img src={product.image}  className={styles.image}/>
+                <img src={product.image} alt={product.name} className={styles.image}/>
                 <Box className={styles.descriptionWrapper}>
                   <Typography variant='h3' className={styles.product}>{product.name}</Typography>
                   <Typography variant='h3' className={styles.product}>${product.price}</Typography>
