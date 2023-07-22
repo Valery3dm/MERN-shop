@@ -95,7 +95,7 @@ const ProductListPage = () => {
                       {product._id}
                     </TableCell>
                     <TableCell align="right">{product.name}</TableCell>
-                    <TableCell align="right">{product.price}</TableCell>
+                    <TableCell align="right">${product.price}</TableCell>
                     <TableCell align="right">{product.category}</TableCell>
                     <TableCell align="right">{product.brand}</TableCell>
                     <TableCell align="right">
