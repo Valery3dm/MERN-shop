@@ -8,8 +8,8 @@ import styles from './CustomRating.module.scss';
 const CustomRating = ({rating, reviews}: CustomRatingProps) => {
   return (
     <Box className={styles.ratingWrapper}>
-      <Rating name="size-medium" defaultValue={rating} precision={0.5} readOnly />
-      <Typography className={styles.reviewText}>{reviews} reviews</Typography>
+      <Rating name="size-medium" value={rating} precision={0.5} readOnly />
+      {reviews && <Typography className={styles.reviewText}>{reviews} reviews</Typography>}
     </Box>
   );
 };

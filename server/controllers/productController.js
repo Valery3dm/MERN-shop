@@ -85,7 +85,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 // @desc    Create a new review
-// @route   POST /api/product/:id/review
+// @route   POST /api/product/:id/reviews
 // @access  Private
 const createProductReview = asyncHandler(async (req, res) => {
 
@@ -94,7 +94,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 
   if (product) {
     const alreadyReviewed = product.reviews.find(
-      (review) => review.user.toString() === req.user._id
+      (review) => review.user.toString() === req.user._id.toString()
     );
 
     if (alreadyReviewed) {
