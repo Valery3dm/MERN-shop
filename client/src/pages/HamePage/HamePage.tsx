@@ -7,7 +7,8 @@ import CustomError from '../../common/CustomError';
 import ProductCard from '../../components/ProductCard';
 import Loader from '../../common/Loader';
 import Paginate from '../../components/Paginate';
-import Search from '../../components/Search/Search';
+import Search from '../../components/Search';
+import ProductCarousel from '../../components/ProductCarousel';
 
 import styles from './HamePage.module.scss';
 
@@ -31,6 +32,7 @@ const HamePage = () => {
       <Box className={styles.searchMobile}>
         <Search />
       </Box>
+      {!keyword && <ProductCarousel />}
       <Typography variant="h4">Latest Product</Typography>
       <Grid container spacing={3}>
         {data &&

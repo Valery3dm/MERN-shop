@@ -64,6 +64,12 @@ export const productsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+    getTopProducts: build.query<Product[], void>({
+      query: () => ({
+        url: `${URLs.PRODUCTS_URL}/top`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -74,5 +80,6 @@ export const {
   useUpdateProductMutation,
   useUploadProductImageMutation,
   useDeleteProductMutation,
-  useCreateReviewMutation
+  useCreateReviewMutation,
+  useGetTopProductsQuery
 } = productsApi;
