@@ -21,9 +21,10 @@ import {
 } from '../../../store/services/productsApi';
 import { Product } from '../../../interfaces';
 
-import CustomButton from '../../../common/CustomButton/CustomButton';
-import Loader from '../../../common/Loader/Loader';
-import Message from '../../../common/Message/Message';
+import CustomButton from '../../../common/CustomButton';
+import Loader from '../../../common/Loader';
+import Message from '../../../common/Message';
+import Paginate from '../../../components/Paginate';
 
 const ProductListPage = () => {
   const {pageNumber} = useParams();
@@ -72,49 +73,53 @@ const ProductListPage = () => {
       ) : error ? (
         <Message severity="error">{`${error}`}</Message>
       ) : (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align="right">NAME</TableCell>
-                <TableCell align="right">PRICE</TableCell>
-                <TableCell align="right">CATEGORY</TableCell>
-                <TableCell align="right">BRAND</TableCell>
-                <TableCell align="right"></TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data &&
-                data.products.map((product: Product) => (
-                  <TableRow
-                    key={product._id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {product._id}
-                    </TableCell>
-                    <TableCell align="right">{product.name}</TableCell>
-                    <TableCell align="right">${product.price}</TableCell>
-                    <TableCell align="right">{product.category}</TableCell>
-                    <TableCell align="right">{product.brand}</TableCell>
-                    <TableCell align="right">
-                      <Link to={`/admin/product/${product._id}/edit`}>
-                        <CustomButton text={<FaEdit />} />
-                      </Link>
-                    </TableCell>
-                    <TableCell align="right">
-                      <CustomButton
-                        text={<FaTrash style={{ color: 'red' }} />}
-                        onClick={() => deleteHandler(product._id)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell align="right">NAME</TableCell>
+                  <TableCell align="right">PRICE</TableCell>
+                  <TableCell align="right">CATEGORY</TableCell>
+                  <TableCell align="right">BRAND</TableCell>
+                  <TableCell align="right"></TableCell>
+                  <TableCell align="right"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data &&
+                  data.products.map((product: Product) => (
+                    <TableRow
+                      key={product._id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {product._id}
+                      </TableCell>
+                      <TableCell align="right">{product.name}</TableCell>
+                      <TableCell align="right">${product.price}</TableCell>
+                      <TableCell align="right">{product.category}</TableCell>
+                      <TableCell align="right">{product.brand}</TableCell>
+                      <TableCell align="right">
+                        <Link to={`/admin/product/${product._id}/edit`}>
+                          <CustomButton text={<FaEdit />} />
+                        </Link>
+                      </TableCell>
+                      <TableCell align="right">
+                        <CustomButton
+                          text={<FaTrash style={{ color: 'red' }} />}
+                          onClick={() => deleteHandler(product._id)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          {data && <Paginate page={data.page} pages={data.pages} isAdmin/>}
+        </>
       )}
     </>
   );

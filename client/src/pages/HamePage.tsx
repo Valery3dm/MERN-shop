@@ -4,7 +4,8 @@ import { useParams } from 'react-router';
 import { useGetProductsQuery } from '../store/services/productsApi';
 import CustomError from '../common/CustomError';
 import ProductCard from '../components/ProductCard';
-import Loader from '../common/Loader/Loader';
+import Loader from '../common/Loader';
+import Paginate from '../components/Paginate';
 
 const HamePage = () => {
   const {pageNumber} = useParams();
@@ -29,6 +30,7 @@ const HamePage = () => {
             </Grid>
           ))}
       </Grid>
+      {data && <Paginate page={data.page} pages={data.pages}/>}
     </>
   );
 };
