@@ -20,6 +20,12 @@ export interface Product {
   reviews: Review[];
 }
 
+export interface PaginatedProductResponse {
+  products: Product[];
+  page: number;
+  pages: number;
+}
+
 type Qty = {
   qty: number;
 };

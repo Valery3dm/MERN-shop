@@ -3,6 +3,7 @@ import { api } from './api';
 import { URLs } from '../../constants';
 
 import {
+  PaginatedProductResponse,
   Product,
   UpdateProductBody,
   UploadImageResponse,
@@ -10,9 +11,12 @@ import {
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query<Product[], void>({
-      query: () => ({
+    getProducts: build.query<PaginatedProductResponse, number>({
+      query: (pageNumber) => ({
         url: URLs.PRODUCTS_URL,
+        params: {
+          pageNumber,
+        }
       }),
       providesTags: ['Products'],
       keepUnusedDataFor: 5,

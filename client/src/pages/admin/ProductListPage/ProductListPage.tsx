@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import {
@@ -26,7 +26,8 @@ import Loader from '../../../common/Loader/Loader';
 import Message from '../../../common/Message/Message';
 
 const ProductListPage = () => {
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const {pageNumber} = useParams();
+  const { data, isLoading, error, refetch } = useGetProductsQuery(Number(pageNumber));
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
   const [deleteProduct, {isLoading: loadingDelete}] = useDeleteProductMutation();
@@ -85,8 +86,8 @@ const ProductListPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products &&
-                products.map((product: Product) => (
+              {data &&
+                data.products.map((product: Product) => (
                   <TableRow
                     key={product._id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
