@@ -11,10 +11,11 @@ import {
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query<PaginatedProductResponse, number>({
-      query: (pageNumber) => ({
+    getProducts: build.query<PaginatedProductResponse, {keyword?: string,  pageNumber?: number}>({
+      query: ({keyword = '', pageNumber = 1}) => ({
         url: URLs.PRODUCTS_URL,
         params: {
+          keyword,
           pageNumber,
         }
       }),

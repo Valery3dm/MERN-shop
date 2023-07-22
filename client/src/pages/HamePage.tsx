@@ -8,8 +8,11 @@ import Loader from '../common/Loader';
 import Paginate from '../components/Paginate';
 
 const HamePage = () => {
-  const {pageNumber} = useParams();
-  const { data, isLoading, error } = useGetProductsQuery(Number(pageNumber));
+  const {pageNumber, keyword} = useParams();
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword,
+    pageNumber: Number(pageNumber)
+  });
 
   if (isLoading) {
     return <Loader />
@@ -30,7 +33,7 @@ const HamePage = () => {
             </Grid>
           ))}
       </Grid>
-      {data && <Paginate page={data.page} pages={data.pages}/>}
+      {data && <Paginate page={data.page} pages={data.pages} keyword={keyword}/>}
     </>
   );
 };

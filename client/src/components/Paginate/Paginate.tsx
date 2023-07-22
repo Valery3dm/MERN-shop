@@ -6,15 +6,20 @@ type Props = {
   page: number;
   pages: number;
   isAdmin?: boolean;
+  keyword?: string;
 };
 
-const Paginate = ({page, pages, isAdmin = false}: Props) => {
+const Paginate = ({page, pages, isAdmin = false, keyword = ''}: Props) => {
   const navigate = useNavigate();
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    if (isAdmin) {
-      navigate(`/admin/productlist/${value}`);
+    if (!isAdmin) {
+      if (keyword) {
+        navigate(`/search/${keyword}/page/${value}`);
+      } else {
+        navigate(`/page/${value}`);
+      }
     } else {
-      navigate(`/page/${value}`);
+      navigate(`/admin/productlist/${value}`);
     }
   };
 
