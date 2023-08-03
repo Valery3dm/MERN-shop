@@ -1,10 +1,10 @@
 import { api } from './api';
 import { URLs } from '../../constants';
-import { OrderResponse, OrderState } from '../../interfaces';
+import { OrderResponse, OrderState, CreateOrderResponse } from '../../interfaces';
 
 export const ordersApi = api.injectEndpoints({
   endpoints: (build) => ({
-    createOrder: build.mutation<OrderResponse, OrderState>({
+    createOrder: build.mutation<CreateOrderResponse, OrderState>({
       query: (order) => ({
         url: URLs.ORDERS_URL,
         method: 'POST',

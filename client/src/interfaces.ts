@@ -76,16 +76,49 @@ export interface UserResponse {
   _id: string;
 }
 
-export interface OrderResponse extends OrderState {
+export interface OrderItemsResponse {
+  name: string;
+  qty: number;
+  image: string;
+  price: number;
+  product: string;
+  _id: string;
+}
+
+export interface CreateOrderResponse {
+  brand: string;
+  category: string;
+  countInStock: number;
+  createdAt: string;
+  description: string;
+  image: string;
+  name: string;
+  numReviews: number;
+  price: number;
+  rating: number;
+  reviews: Review[];
+  updatedAt: string;
+  user: string;
+  _id: string;
+}
+
+export interface OrderResponse {
   _id: string;
   user: UserResponse;
+  orderItems: OrderItemsResponse[];
   isPaid: Boolean;
   isDelivered: Boolean;
   createdAt: Date;
   updatedAt: Date;
   paidAt: Date;
   deliveredAt: Date;
-}
+  shippingAddress: ShippingAddress;
+  paymentMethod: string;
+  itemsPrice: number; 
+  shippingPrice: number;
+  taxPrice: number;
+  totalPrice: number;
+}  
 
 export interface UploadImageResponse {
   image: string;
