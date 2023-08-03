@@ -138,7 +138,7 @@ const CartPage = () => {
               value={item.qty}
               label="QTY"
               onChange={(e) =>
-                dispatch(addToCart({ ...cartItems, qty: e.target.value }))
+                dispatch(addToCart({ ...item, qty: e.target.value }))
               }
             >
               {Array.from(

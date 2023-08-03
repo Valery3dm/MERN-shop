@@ -17,7 +17,6 @@ import {
   SCRIPT_LOADING_STATE,
   usePayPalScriptReducer,
 } from '@paypal/react-paypal-js';
-// import { Order, Actions, OnApproveData } from 'paypal-checkout';
 
 import {
   useGetOrderDetailsQuery,
@@ -141,7 +140,16 @@ const OrderPage = () => {
 
   return (
     <>
-      <Typography variant="h4">Order {order?._id}</Typography>
+      <Typography
+        variant="h4"
+        sx={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        Order {order?._id}
+      </Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={8} xl={9}>
@@ -256,7 +264,7 @@ const OrderPage = () => {
                         />
                       </Grid>
                       <Grid item xs={5}>
-                        <Link to={`/product/${item._id}`}>{item.name}</Link>
+                        <Link to={`/product/${item.product}`}>{item.name}</Link>
                       </Grid>
                       <Grid item xs={5}>
                         {item.qty} x ${item.price} = $
