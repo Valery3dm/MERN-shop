@@ -5,6 +5,7 @@ import {
   Box,
   Grid,
   List,
+  Button,
   ListItem,
   Typography,
   ListItemText,
@@ -22,7 +23,6 @@ import { useCreateReviewMutation } from '../../store/services/productsApi';
 import { ReviewsSectionProps } from './ReviewsSection.type';
 
 import CustomRating from '../../components/CustomRating';
-import CustomButton from '../../common/CustomButton';
 import Message from '../../common/Message';
 import Loader from '../../common/Loader';
 
@@ -35,7 +35,8 @@ const ReviewsSection = ({ product, productId, refetch }: ReviewsSectionProps) =>
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
 
-  const onSubmit = async () => {
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       await createReview({
         productId,
@@ -95,7 +96,7 @@ const ReviewsSection = ({ product, productId, refetch }: ReviewsSectionProps) =>
           {loadingProductReview && <Loader />}
 
           {userInfo ? (
-            <Box component="form" noValidate autoComplete="off">
+            <Box component="form" autoComplete="off" onSubmit={onSubmitHandler}>
               <FormControl fullWidth>
                 <InputLabel id="rating-simple-select-label">Rating</InputLabel>
                 <Select
@@ -128,9 +129,18 @@ const ReviewsSection = ({ product, productId, refetch }: ReviewsSectionProps) =>
                 </FormHelperText>
               </FormControl>
 
-              <Box sx={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                <CustomButton text="Update" onClick={onSubmit} />
-              </Box>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={loadingProductReview}
+                sx={{
+                  backgroundColor: 'black',
+                  width: '100%',
+                  '&:hover': { backgroundColor: '#616161' },
+                }}
+              >
+                Update
+              </Button>
             </Box>
           ) : (
             <Message severity="info">

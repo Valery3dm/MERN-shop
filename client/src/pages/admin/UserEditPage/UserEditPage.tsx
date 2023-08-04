@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
   Box,
+  Button,
   FormControl,
   FormHelperText,
   Input,
@@ -17,10 +18,10 @@ import {
   useUpdateUserMutation,
 } from '../../../store/services/usersApi';
 
-import FormContainer from '../../../components/FormContainer/FormContainer';
-import Loader from '../../../common/Loader/Loader';
-import Message from '../../../common/Message/Message';
-import CustomButton from '../../../common/CustomButton/CustomButton';
+import FormContainer from '../../../components/FormContainer';
+import Loader from '../../../common/Loader';
+import Message from '../../../common/Message';
+import CustomButton from '../../../common/CustomButton';
 
 const UserEditPage = () => {
   const { id: userId } = useParams();
@@ -47,15 +48,16 @@ const UserEditPage = () => {
     }
   }, [user]);
 
-  const onSubmit = async () => {
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       await updateUser({
-          _id: userId,
-          name,
-          email,
-          isAdmin,
-        });
-      toast.success('User update successfully')
+        _id: userId,
+        name,
+        email,
+        isAdmin,
+      });
+      toast.success('User update successfully');
       refetch();
       navigate('/admin/userlist');
     } catch (err: any) {
@@ -74,7 +76,7 @@ const UserEditPage = () => {
         ) : error ? (
           <Message severity="error">{`${error}`}</Message>
         ) : (
-          <Box component="form" noValidate autoComplete="off">
+          <Box component="form" autoComplete="off" onSubmit={onSubmitHandler}>
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="name-input">Name</InputLabel>
               <Input
@@ -116,7 +118,18 @@ const UserEditPage = () => {
                 text="Go back"
                 onClick={() => navigate('/admin/userlist')}
               />
-              <CustomButton text="Update" onClick={onSubmit} />
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={isLoading}
+                sx={{
+                  backgroundColor: 'black',
+                  width: '100%',
+                  '&:hover': { backgroundColor: '#616161' },
+                }}
+              >
+                Update
+              </Button>
             </Box>
           </Box>
         )}

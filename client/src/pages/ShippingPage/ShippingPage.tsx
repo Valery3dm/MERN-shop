@@ -1,32 +1,39 @@
 import React, { useState } from 'react';
 import {
-  FormControl,
-  FormHelperText,
+  Box,
   Input,
+  Button,
   InputLabel,
   Typography,
+  FormControl,
+  FormHelperText,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { saveShippingAddress } from '../../store/slices/cartSlice';
 
-import FormContainer from '../../components/FormContainer/FormContainer';
-import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
-import CustomButton from '../../common/CustomButton/CustomButton';
+import FormContainer from '../../components/FormContainer';
+import CheckoutSteps from '../../components/CheckoutSteps';
 
 const ShippingPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { shippingAddress } = useAppSelector((state) => state.cart);
 
-  const [address, setAddress] = useState<string>(shippingAddress?.address || '');
+  const [address, setAddress] = useState<string>(
+    shippingAddress?.address || '',
+  );
   const [city, setCity] = useState<string>(shippingAddress?.city || '');
-  const [postalCode, setPostalCode] = useState<string>(shippingAddress?.postalCode || '');
-  const [country, setCountry] = useState<string>(shippingAddress?.country || '');
+  const [postalCode, setPostalCode] = useState<string>(
+    shippingAddress?.postalCode || '',
+  );
+  const [country, setCountry] = useState<string>(
+    shippingAddress?.country || '',
+  );
 
-
-  const onSubmit = () => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate('/payment');
   };
@@ -37,7 +44,7 @@ const ShippingPage = () => {
         <CheckoutSteps step1 step2 />
 
         <Typography variant="h4">Shipping</Typography>
-        <>
+        <Box component="form" autoComplete="off" onSubmit={onSubmitHandler}>
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="address-input">Address</InputLabel>
             <Input
@@ -90,8 +97,18 @@ const ShippingPage = () => {
             </FormHelperText>
           </FormControl>
 
-          <CustomButton text="Continue" onClick={onSubmit} />
-        </>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: 'black',
+              width: '100%',
+              '&:hover': { backgroundColor: '#616161' },
+            }}
+          >
+            Continue
+          </Button>
+        </Box>
       </>
     </FormContainer>
   );
