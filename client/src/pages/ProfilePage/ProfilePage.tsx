@@ -3,19 +3,20 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  FormControl,
-  FormHelperText,
   Grid,
   Input,
-  InputLabel,
-  Typography,
   Paper,
-  TableContainer,
   Table,
-  TableHead,
+  Button,
   TableRow,
+  TableHead,
   TableCell,
   TableBody,
+  InputLabel,
+  Typography,
+  FormControl,
+  FormHelperText,
+  TableContainer,
 } from '@mui/material';
 import { FaTimes } from 'react-icons/fa';
 
@@ -54,7 +55,8 @@ const ProfilePage = () => {
     }
   }, [userInfo, userInfo.name, userInfo.email]);
 
-  const onSubmit = async () => {
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
     } else {
@@ -78,7 +80,12 @@ const ProfilePage = () => {
         <Typography variant="h4" component="div" pb={2}>
           User Profile
         </Typography>
-        <Box component="form" sx={{ maxWidth: 400 }}>
+        <Box
+          component="form"
+          autoComplete="off"
+          sx={{ maxWidth: 400 }}
+          onSubmit={onSubmitHandler}
+        >
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="name-input">Name</InputLabel>
             <Input
@@ -134,11 +141,18 @@ const ProfilePage = () => {
               Confirm your password
             </FormHelperText>
           </FormControl>
-          <CustomButton
-            text="Update"
-            onClick={onSubmit}
+          <Button
+            type="submit"
+            variant="contained"
             disabled={loadingUpdateProfile}
-          />
+            sx={{
+              backgroundColor: 'black',
+              width: '100%',
+              '&:hover': { backgroundColor: '#616161' },
+            }}
+          >
+            Update
+          </Button>
           {loadingUpdateProfile && <Loader />}
         </Box>
       </Grid>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Box,
   Radio,
+  Button,
   RadioGroup,
   FormControlLabel,
   FormControl,
@@ -11,9 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { savePaymentMethod } from '../../store/slices/cartSlice';
 
-import FormContainer from '../../components/FormContainer/FormContainer';
-import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
-import CustomButton from '../../common/CustomButton/CustomButton';
+import FormContainer from '../../components/FormContainer';
+import CheckoutSteps from '../../components/CheckoutSteps';
 
 const PaymentPage = () => {
   const dispatch = useAppDispatch();
@@ -27,14 +28,15 @@ const PaymentPage = () => {
     }
   }, [shippingAddress, navigate]);
 
-  const onSubmit = () => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
     navigate('/placeorder');
   };
 
   return (
     <FormContainer>
-      <>
+      <Box component="form" autoComplete="off" onSubmit={onSubmitHandler}>
         <CheckoutSteps step1 step2 step3 />
 
         <Typography variant="h4">Payment Method</Typography>
@@ -54,8 +56,18 @@ const PaymentPage = () => {
           </RadioGroup>
         </FormControl>
 
-        <CustomButton text="Continue" onClick={onSubmit} />
-      </>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            backgroundColor: 'black',
+            width: '100%',
+            '&:hover': { backgroundColor: '#616161' },
+          }}
+        >
+          Continue
+        </Button>
+      </Box>
     </FormContainer>
   );
 };

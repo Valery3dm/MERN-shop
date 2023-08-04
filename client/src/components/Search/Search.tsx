@@ -9,7 +9,8 @@ const Search = () => {
   const { keyword: urlKeyWord } = useParams();
   const [keyword, setKeyWord] = useState(urlKeyWord || '');
 
-  const onSubmit = () => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (keyword.trim()) {
       navigate(`/search/${keyword}`);
       setKeyWord('');
@@ -20,10 +21,11 @@ const Search = () => {
 
   return (
     <Box
-      component="form"
       noValidate
-      autoComplete="off"
       className={styles.searchWrapper}
+      component="form"
+      autoComplete="off"
+      onSubmit={onSubmitHandler}
     >
       <FormControl margin="normal" fullWidth>
         <Input
@@ -37,9 +39,9 @@ const Search = () => {
         />
       </FormControl>
       <Button
+        type="submit"
         variant="contained"
         className={styles.searchBtn}
-        onClick={onSubmit}
       >
         Search
       </Button>

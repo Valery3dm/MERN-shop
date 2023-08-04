@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
   Box,
+  Button,
   FormControl,
   FormHelperText,
   Input,
@@ -18,10 +19,10 @@ import {
   useUploadProductImageMutation,
 } from '../../../store/services/productsApi';
 
-import FormContainer from '../../../components/FormContainer/FormContainer';
-import Loader from '../../../common/Loader/Loader';
-import Message from '../../../common/Message/Message';
-import CustomButton from '../../../common/CustomButton/CustomButton';
+import FormContainer from '../../../components/FormContainer';
+import Loader from '../../../common/Loader';
+import Message from '../../../common/Message';
+import CustomButton from '../../../common/CustomButton';
 
 const ProductEditPage = () => {
   const { id: productId } = useParams();
@@ -76,7 +77,9 @@ const ProductEditPage = () => {
     }
   };
 
-  const onSubmit = async () => {
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const updatedProduct = {
       _id: productId,
       name,
@@ -109,7 +112,7 @@ const ProductEditPage = () => {
         ) : error ? (
           <Message severity="error">{`${error}`}</Message>
         ) : (
-          <Box component="form" noValidate autoComplete="off">
+          <Box component="form" autoComplete="off" onSubmit={onSubmitHandler}>
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="name-input">Name</InputLabel>
               <Input
@@ -131,7 +134,7 @@ const ProductEditPage = () => {
                   <InputAdornment position="start">$</InputAdornment>
                 }
                 value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
+                onChange={(e) => setPrice(Number(e.target.value) >= 0 ? Number(e.target.value) : 0)}
               />
               <FormHelperText id="price-helper-text">
                 Enter price
@@ -189,7 +192,7 @@ const ProductEditPage = () => {
                 type="number"
                 aria-describedby="countInStock-helper-text"
                 value={countInStock}
-                onChange={(e) => setCountInStock(Number(e.target.value))}
+                onChange={(e) => setCountInStock(Number(e.target.value) >= 0 ? Number(e.target.value) : 0)}
               />
               <FormHelperText id="countInStock-helper-text">
                 Enter countInStock
@@ -228,7 +231,18 @@ const ProductEditPage = () => {
                 text="Go back"
                 onClick={() => navigate('/admin/productlist')}
               />
-              <CustomButton text="Update" onClick={onSubmit} />
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={isLoading}
+                sx={{
+                  backgroundColor: 'black',
+                  width: '100%',
+                  '&:hover': { backgroundColor: '#616161' },
+                }}
+              >
+                Update
+              </Button>
             </Box>
           </Box>
         )}
