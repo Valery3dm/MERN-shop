@@ -11,13 +11,17 @@ import {
 
 export const productsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query<PaginatedProductResponse, {keyword?: string,  pageNumber?: number}>({
-      query: ({keyword = '', pageNumber = 1}) => ({
+    getProducts: build.query<
+      PaginatedProductResponse,
+      { keyword?: string; pageNumber?: number; sortValue?: string }
+    >({
+      query: ({ keyword = '', pageNumber = 1, sortValue = 'default' }) => ({
         url: URLs.PRODUCTS_URL,
         params: {
           keyword,
           pageNumber,
-        }
+          sortValue,
+        },
       }),
       providesTags: ['Products'],
       keepUnusedDataFor: 5,
