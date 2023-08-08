@@ -6,3 +6,5 @@ export enum URLs {
   PAYPAL_URL = '/api/config/paypal',
   UPLOAD_URL = '/api/upload',
 }
+
+export const sortList: string[] = ['default', 'price ↑', 'price ↓'];

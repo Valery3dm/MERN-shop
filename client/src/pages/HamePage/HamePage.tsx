@@ -1,22 +1,27 @@
-import { Grid, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Grid, MenuItem, Select, Typography } from '@mui/material';
 import { useParams } from 'react-router';
 import { Box } from '@mui/material';
 
 import { useGetProductsQuery } from '../../store/services/productsApi';
-import CustomError from '../../common/CustomError';
+
 import ProductCard from '../../components/ProductCard';
+import CustomError from '../../common/CustomError';
 import Loader from '../../common/Loader';
+import ProductCarousel from '../../components/ProductCarousel';
 import Paginate from '../../components/Paginate';
 import Search from '../../components/Search';
-import ProductCarousel from '../../components/ProductCarousel';
+import { sortList } from '../../constants';
 
 import styles from './HamePage.module.scss';
 
 const HamePage = () => {
   const { pageNumber, keyword } = useParams();
+  const [sortValue, setSortValue] = useState<string>('default');
   const { data, isLoading, error } = useGetProductsQuery({
     keyword,
     pageNumber: Number(pageNumber),
+    sortValue,
   });
 
   if (isLoading) {
@@ -33,7 +38,22 @@ const HamePage = () => {
         <Search />
       </Box>
       {!keyword && <ProductCarousel />}
-      <Typography variant="h4">Latest Product</Typography>
+      <Box className={styles.productListHeader}>
+        <Typography variant="h4">Latest Product</Typography>
+        <Select
+          labelId="qty-select-label"
+          id="qty-select"
+          value={sortValue}
+          label="QTY"
+          onChange={(e) => setSortValue(e.target.value)}
+        >
+          {sortList.map((option, idx) => (
+            <MenuItem key={idx} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
       <Grid container spacing={3}>
         {data &&
           data.products.map((product) => (
